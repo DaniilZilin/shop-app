@@ -1,6 +1,6 @@
 import React from 'react'
 import ItemsList from '../../components/ItemsList'
-import { Item } from '../../../app/types'
+import { Item } from '../../types'
 
 export interface Props {
   items: Item[]

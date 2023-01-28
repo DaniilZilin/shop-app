@@ -2,7 +2,7 @@ export interface Item {
   id: number,
   name: string,
   specs: string,
-  picture: string,
+  photo: string,
   price: number,
   rating: number,
   brand: string

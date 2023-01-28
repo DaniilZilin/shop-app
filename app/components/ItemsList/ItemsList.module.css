@@ -1,0 +1,24 @@
+.itemsContainer {
+  display: flex;
+}
+
+.itemBox {
+  display: flex;
+  border: 1px blue solid;
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.imageBox {
+
+}
+
+
+.itemName {
+
+}
+
+.itemPhoto {
+
+}

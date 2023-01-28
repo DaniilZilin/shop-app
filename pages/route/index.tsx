@@ -8,9 +8,9 @@ export interface Props {
   items: Item[]
 }
 
-const getItemsList = async() => {
-  return await fetcher('http://localhost:3000/api/v1/items_list/list')
-}
+// const getItemsList = async() => {
+//   return await fetcher('http://localhost:3000/api/v1/items_list/list')
+// }
 
 export default function ItemsList({ items }: Props) {
   return (
@@ -23,7 +23,7 @@ export default function ItemsList({ items }: Props) {
 export async function getServerSideProps() {
   return {
     props: {
-      items: await getItemsList(),
+      // items: await getItemsList(),
     },
   }
 }
