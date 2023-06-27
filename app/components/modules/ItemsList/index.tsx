@@ -1,10 +1,10 @@
 import React from 'react'
-import { Item } from '../../types'
+import { Item } from '../../../types'
 import Image from 'next/image'
 import useSWR from 'swr'
 
 import styles from './ItemsList.module.css'
-import fetcher from "../../utils/fetcher";
+import fetcher from '../../../utils/fetcher'
 
 export interface Props {
   items: Item[]

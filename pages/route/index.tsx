@@ -12,7 +12,7 @@ export interface Props {
 //   return await fetcher('http://localhost:3000/api/v1/items_list/list')
 // }
 
-export default function ItemsList({ items }: Props) {
+export default function ItemsPage({ items }: Props) {
   return (
     <MainLayout>
       <ItemsListView items={items}  />

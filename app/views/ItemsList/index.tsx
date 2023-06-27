@@ -1,5 +1,5 @@
 import React from 'react'
-import ItemsList from '../../components/ItemsList'
+import ItemsList from '../../components/modules/ItemsList'
 import { Item } from '../../types'
 
 export interface Props {

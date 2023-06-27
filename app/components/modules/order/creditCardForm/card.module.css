@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  /*margin: 0 auto;*/
+}
+
+.lowerContainer {
+  display: flex;
+}
+
+/*.cardIcon {*/
+/*  position: absolute;*/
+/*}*/
+
+.submitButton {
+  color: green;
+  width: 200px;
+  height: 40px;
+}
+
+.pageName {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.mainContainer {
+  margin: 0 auto;
+}
+
+.eyeImage {
+  position: absolute;
+  margin-left: -40px;
+  margin-top: 10px;
+}
