@@ -7,16 +7,6 @@
   display: flex;
 }
 
-/*.cardIcon {*/
-/*  position: absolute;*/
-/*}*/
-
-.submitButton {
-  color: green;
-  width: 200px;
-  height: 40px;
-}
-
 .pageName {
   margin-bottom: 20px;
   font-size: 24px;
@@ -30,4 +20,14 @@
   position: absolute;
   margin-left: -40px;
   margin-top: 10px;
+}
+
+.mainBlock {
+  /*display: flex;*/
+  margin: 0 auto
+}
+
+.submitButton {
+  height: 50px;
+  width: 300px;
 }

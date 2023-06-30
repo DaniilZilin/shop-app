@@ -10,8 +10,8 @@ export interface Props {
 
 export default function OrderPage({}: Props) {
   return (
-    <MainLayout>
+    // <MainLayout>
       <OrderView />
-    </MainLayout>
+    // </MainLayout>
   )
 }

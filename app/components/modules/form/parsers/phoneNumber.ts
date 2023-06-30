@@ -3,8 +3,9 @@ const phoneNumber = (value: string) => {
       return value
   }
 
+  const Number = value.replace(/[^\d]/g, '')
 
-  return `${7} `
+  return `+7 (${value.slice(0,3)})`
 
 }
 

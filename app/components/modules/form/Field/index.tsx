@@ -7,10 +7,11 @@ import Image from 'next/image'
 export interface Props {
   meta: any,
   input: any,
-  children: any
+  label: string,
+  children: React.ReactNode,
 }
 
-export default function Field({ meta, input, children }: Props) {
+export default function Field({ meta, input, label, children }: Props) {
   const [ imageName, setImageName ] = React.useState<string>('')
 
   const getCardType = React.useCallback((value: string) => {
@@ -27,17 +28,19 @@ export default function Field({ meta, input, children }: Props) {
     }
   }, [ imageName, setImageName])
 
-    React.useEffect(() => {
-      if (input.name === "cardNumber") {
-        getCardType(input.value)
-      }
-    })
+  React.useEffect(() => {
+    if (input.name === "cardNumber") {
+      getCardType(input.value)
+    }
+  })
 
   const hasError = meta.error && meta.submitFailed
 
   return (
-    <div className={classNames(styles.formGroup, { [styles.active]: hasError})}>
-      {children}
+    // <div className={classNames(styles.formGroup, { [styles.active]: hasError})}>
+    <div>
+      <div>{label}</div>
+       {children}
       <p>{hasError ? meta.error : null}</p>
         {imageName && (
         <div>

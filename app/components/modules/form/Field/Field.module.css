@@ -11,7 +11,7 @@
 }
 
 .logoStyles {
-  position: absolute;
-  margin-left: 150px;
-  margin-top: -40px;
+  position: relative;
+  /*margin-left: 100px;*/
+  /*margin-top: 20px;*/
 }
