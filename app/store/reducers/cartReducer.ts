@@ -1,11 +1,15 @@
-export interface Cart {
-  cartItems: any[]
+import { CartState, UserAction, UserActionTypes } from '../../types'
+
+const initialState: CartState = {
+  cartItems: [],
+  cartFullPrice: 0
 }
 
-const initialState = {
-  cartItems: []
-}
-
-export const cartReducer = (state = initialState) => {
-
+export const cartReducer = (state = initialState, action: UserAction): CartState => {
+  switch (action.type) {
+    case UserActionTypes.ADD_TO_CART:
+      return { cartFullPrice: state.cartFullPrice + action.payload.price, cartItems: state.cartItems.concat(action.payload) }
+    default:
+      return state
+  }
 }

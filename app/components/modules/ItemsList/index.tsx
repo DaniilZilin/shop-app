@@ -5,6 +5,8 @@ import useSWR from 'swr'
 
 import styles from './ItemsList.module.css'
 import fetcher from '../../../utils/fetcher'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTypesSelector } from "../../../hooks/useTypedSelector";
 
 export interface Props {
   items: Item[]
@@ -30,8 +32,22 @@ export default function ItemsList({ items }: Props) {
   //   setQueryParams(queryString)
   // }, [])
 
+  const { cartItems, cartFullPrice } = useTypesSelector(state => state.user)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+
+  })
+
+  const AddToCart = (item: any) => {
+    dispatch({type: 'ADD_TO_CART', payload: item })
+  }
+
+  console.log(cartItems)
+  console.log(cartFullPrice)
   return (
     <div>
+      <div>Общая стоимость {cartFullPrice}₽</div>
       {data?.map((item: Item) => (
           <div className={styles.itemBox}>
             <div className={styles.imageBox}>
@@ -49,6 +65,7 @@ export default function ItemsList({ items }: Props) {
             </div>
             <div className={styles.priceBox}>
               <div>{item.price + `₽`}</div>
+              <div onClick={() => AddToCart(item)}>Add to cart</div>
             </div>
           </div>
       ))}
