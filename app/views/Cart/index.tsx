@@ -1,17 +1,15 @@
 import React from 'react'
-import {useTypesSelector} from "../../hooks/useTypedSelector";
 
+import Cart from "../../components/modules/cart";
 
 export interface Props {
 
 }
 
 export default function CartView() {
-  const { cartItems, cartFullPrice } = useTypesSelector(state => state.user)
-  console.log(cartItems)
   return (
     <div>
-      {!cartItems ? cartItems  : 'Корзина пуста'}
+      <Cart />
     </div>
   )
 }
