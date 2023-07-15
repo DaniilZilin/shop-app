@@ -12,6 +12,7 @@ const ITEM_LIST: Item[] = [
       rating: 4.5,
       brand: 'Nvidia',
       order_available: 3,
+      quantity: 1,
     },
     {
       id: 2,
@@ -22,6 +23,7 @@ const ITEM_LIST: Item[] = [
       rating: 4.5,
       brand: 'AMD',
       order_available: 3,
+      quantity: 1,
     },
     {
       id: 3,
@@ -32,6 +34,7 @@ const ITEM_LIST: Item[] = [
       rating: 4.5,
       brand: 'Zet Gaming',
       order_available: 3,
+      quantity: 1,
     }
 ]
 

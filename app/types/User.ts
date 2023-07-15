@@ -3,6 +3,7 @@ export enum UserActionTypes {
   SET_CART = 'SET_CART',
   INCREASE_QUANTITY = 'INCREASE_QUANTITY',
   DECREASE_QUANTITY = 'DECREASE_QUANTITY',
+  DELETE_ITEM = 'DELETE_ITEM',
 }
 
 export interface CartState {

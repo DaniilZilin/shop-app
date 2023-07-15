@@ -7,4 +7,5 @@ export interface Item {
   rating: number,
   brand: string
   order_available: number,
+  quantity: number,
 }

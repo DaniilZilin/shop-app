@@ -7,7 +7,6 @@ import styles from './ItemsList.module.css'
 import fetcher from '../../../utils/fetcher'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTypesSelector } from "../../../hooks/useTypedSelector";
-import { useRouter } from 'next/router'
 import ItemState from "../cart/ItemState";
 
 export interface Props {
@@ -36,20 +35,21 @@ export default function ItemsList({ items }: Props) {
   const { cartItems, cartFullPrice } = useTypesSelector(state => state.user)
   const dispatch = useDispatch()
 
-  const setCart = () => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems))
-    dispatch({ type: 'SET_CART', payload: JSON.parse(localStorage.getItem('cartItems'))})
-    // localStorage.setItem('cartFullPrice', JSON.stringify(cartFullPrice))
-  }
+  // const setCart = () => {
+  //   localStorage.setItem('cartItems', JSON.stringify(cartItems))
+  //   dispatch({ type: 'SET_CART', payload: JSON.parse(localStorage.getItem('cartItems'))})
+  //   // localStorage.setItem('cartFullPrice', JSON.stringify(cartFullPrice))
+  // }
 
   const AddToCart = (item: Item) => {
     dispatch({ type: 'ADD_TO_CART', payload: item })
-    setCart()
+    // setCart()
     // localStorage.setItem('cartItems', JSON.stringify(cartItems))
   }
   React.useEffect(() => {
-    setCart()
+    // setCart()
   }, [])
+
 
   console.log(cartItems)
   console.log(cartFullPrice)

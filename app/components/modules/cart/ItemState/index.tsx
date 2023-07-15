@@ -1,26 +1,37 @@
 import React from 'react'
 import { Item } from '../../../../types'
-import {useRouter} from "next/router";
+import { useRouter } from 'next/router'
+import {useTypesSelector} from "../../../../hooks/useTypedSelector";
 
 export interface Props {
-  item: Item
-  AddToCart(item: Item): void
+  item: Item;
+  AddToCart(item: Item): void;
 }
 
 export default function ItemState({ item, AddToCart }: Props) {
-  const [ item2, setItem ] = React.useState<boolean>(true)
+  const [ status, setStatus ] = React.useState<boolean>(true)
+  const { cartItems, cartFullPrice } = useTypesSelector(state => state.user)
 
-  const itemStatus = item2 ? 'Добавить в корзину' : 'Перейти в корзину'
+
+  const itemStatus = status ? 'Добавить в корзину' : 'Перейти в корзину'
   const router = useRouter()
 
+  console.log(cartItems)
+
+  React.useEffect(() => {
+    if (cartItems.includes(item)) {
+      setStatus(false)
+    }
+  })
+
   const controlStatus = React.useCallback(() => {
-    if (item2) {
+    if (status) {
       AddToCart(item)
-      setItem(false)
+      setStatus(false)
     } else {
       router.push('route/cart')
     }
-  }, [ item2, setItem ])
+  }, [ status, setStatus ])
 
   return (
     <div>
