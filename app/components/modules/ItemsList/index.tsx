@@ -2,12 +2,14 @@ import React from 'react'
 import { Item } from '../../../types'
 import Image from 'next/image'
 import useSWR from 'swr'
+import { Rate } from 'antd'
+
 
 import styles from './ItemsList.module.css'
 import fetcher from '../../../utils/fetcher'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTypesSelector } from "../../../hooks/useTypedSelector";
-import ItemState from "../cart/ItemState";
+import { useDispatch } from 'react-redux'
+import { useTypesSelector } from '../../../hooks/useTypedSelector'
+import ItemState from '../cart/ItemState'
 
 export interface Props {
   items: Item[]
@@ -32,7 +34,7 @@ export default function ItemsList({ items }: Props) {
   //   setQueryParams(queryString)
   // }, [])
 
-  const { cartItems, cartFullPrice } = useTypesSelector(state => state.user)
+  const { cartItems } = useTypesSelector(state => state.user)
   const dispatch = useDispatch()
 
   // const setCart = () => {
@@ -50,13 +52,12 @@ export default function ItemsList({ items }: Props) {
     // setCart()
   }, [])
 
-
+  const totalSum = cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)
   console.log(cartItems)
-  console.log(cartFullPrice)
 
   return (
     <div>
-      <div>Общая стоимость {cartFullPrice}₽</div>
+      <div>Общая стоимость {totalSum}₽</div>
       {data?.map((item: Item) => (
           <div className={styles.itemBox}>
             <div className={styles.imageBox}>
@@ -69,7 +70,7 @@ export default function ItemsList({ items }: Props) {
               </div>
               <div className={styles.othersBox}>
                 <div>{item.order_available}</div>
-                <div>{item.rating}</div>
+                <Rate disabled defaultValue={item.rating} />
               </div>
             </div>
             <div className={styles.priceBox}>

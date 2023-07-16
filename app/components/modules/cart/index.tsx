@@ -5,9 +5,10 @@ import { Item } from "../../../types"
 import styles from './cart.module.css'
 import Image from 'next/image'
 
+import TabAmount from './TabAmount'
 
 export default function Cart() {
-  const { cartItems, cartFullPrice } = useTypesSelector(state => state.user)
+  const { cartItems } = useTypesSelector(state => state.user)
   const dispatch = useDispatch()
 
   // React.useEffect(() => {
@@ -20,7 +21,7 @@ export default function Cart() {
   }
 
   const DECREASE_QUANTITY = (item: Item) => {
-    dispatch({type: 'DECREASE_QUANTITY', payload: item})
+    dispatch({ type: 'DECREASE_QUANTITY', payload: item })
   }
 
   const DELETE_ITEM = (item: Item) => {
@@ -29,33 +30,42 @@ export default function Cart() {
   console.log(cartItems)
 
   return (
-  <div className={styles.root}>
-    <div>
-   {cartItems?.map((item: Item, key) => (
-     <div className={styles.itemsContainer}>
-       <div>
-         <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="150" height="150" alt="" />
-       </div>
-       <div>
-         <div>
-           <div>{item.name}</div>
-           <div>{item.brand}</div>
-         </div>
-       </div>
-       <div>
-         <div>{item.price + `₽`}</div>
-         <div>{item.quantity}</div>
-         <div onClick={() => DELETE_ITEM(item)}>Delete item</div>
-         <div onClick={() => INCREASE_QUANTITY(item)}>Increase quantity</div>
-         <div onClick={() => DECREASE_QUANTITY(item)}>Decrease quantity</div>
-       </div>
-     </div>
-   ))}
+    <div className={styles.root}>
+      <div>
+      {cartItems.length > 1 ? (
+      <div style={{ border: '2px solid red'}}>
+        <input type="checkbox" />
+        <p>Выбрать все</p>
+        <p>Удалить выбранные</p>
+      </div>
+      ) : null}
+      {cartItems.map((item: Item) => (
+        <div className={styles.itemsContainer}>
+          {cartItems.length > 1 ? <input type='checkbox' checked />: null}
+                  <div>
+                    <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="150" height="150" alt=""/>
+                  </div>
+                  <div>
+                    <div>{item.name}</div>
+                    <div>{item.brand}</div>
+                  </div>
+                  <div>
+                    <div>За 1 шт.{item.price + `₽`}</div>
+                    <div>Cумма{item.price * item.quantity}</div>
+                    <div onClick={() => DELETE_ITEM(item)}>Удалить</div>
+                    <br/>
+                    <div className={styles.quantityCounter}>
+                      <div className={styles.leftCounter} onClick={() => INCREASE_QUANTITY(item)}>+</div>
+                      <div>{item.quantity}</div>
+                      <div className={styles.rightCounter} onClick={() => DECREASE_QUANTITY(item)}>-</div>
+                    </div>
+                  </div>
+        </div>
+      ))}
+      </div>
+      <TabAmount/>
     </div>
-    <div className={styles.totalSumContainer}>
-      <div>Детали заказа</div>
-    </div>
-  </div>
-)}
+  )
+}
 
 

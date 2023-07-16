@@ -3,7 +3,7 @@
 }
 
 .itemsContainer {
-  width: 1000px;
+  width: 800px;
   border: 2px solid red;
 }
 
@@ -11,5 +11,25 @@
   width: 400px;
   height: 400px;
   border: 2px solid red;
-  margin-left: 50px;
+  margin-left: 20px;
+}
+
+.quantityCounter {
+  display: flex;
+  width: 100px;
+  height: 50px;
+  border: 1px solid grey;
+  border-radius: 10px;
+}
+
+.leftCounter {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.rightCounter {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }

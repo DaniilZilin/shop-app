@@ -8,7 +8,6 @@ export enum UserActionTypes {
 
 export interface CartState {
   cartItems: any[]
-  cartFullPrice: number
 }
 
 interface ADD_TO_CART {
