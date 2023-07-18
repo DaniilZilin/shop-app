@@ -6,6 +6,7 @@ import styles from './cart.module.css'
 import Image from 'next/image'
 
 import TabAmount from './TabAmount'
+import CheckBoxItem from './CheckBoxItem'
 
 export default function Cart() {
   const { cartItems } = useTypesSelector(state => state.user)
@@ -16,7 +17,7 @@ export default function Cart() {
   // }, [])
 
   const INCREASE_QUANTITY = (item: Item) => {
-    dispatch({ type: 'INCREASE_QUANTITY', payload: item})
+    dispatch({ type: 'INCREASE_QUANTITY', payload: item })
     console.log(cartItems)
   }
 
@@ -25,45 +26,63 @@ export default function Cart() {
   }
 
   const DELETE_ITEM = (item: Item) => {
-    dispatch({ type: 'DELETE_ITEM', payload: item})
+    dispatch({ type: 'DELETE_ITEM', payload: item })
   }
-  console.log(cartItems)
 
   return (
     <div className={styles.root}>
-      <div>
-      {cartItems.length > 1 ? (
-      <div style={{ border: '2px solid red'}}>
-        <input type="checkbox" />
-        <p>Выбрать все</p>
-        <p>Удалить выбранные</p>
-      </div>
-      ) : null}
-      {cartItems.map((item: Item) => (
-        <div className={styles.itemsContainer}>
-          {cartItems.length > 1 ? <input type='checkbox' checked />: null}
-                  <div>
+      {cartItems.length >= 1 ? (
+      <>
+        <div>
+            {cartItems.length > 1 && (
+              <div className={styles.massSelection}>
+                <div style={{ display: 'flex'}}>
+                  <input type="checkbox"/>
+                  <div>Выбрать все</div>
+                </div>
+                <div>Удалить выбранные</div>
+              </div>
+            )}
+            <div className={styles.itemsBlock}>
+            {cartItems?.map((item: Item) => (
+                <div className={styles.itemBlock}>
+                  {cartItems.length > 1 && (
+                    <CheckBoxItem />
+                  )}
+                  <div className={styles.cartImage}>
                     <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="150" height="150" alt=""/>
                   </div>
-                  <div>
-                    <div>{item.name}</div>
-                    <div>{item.brand}</div>
-                  </div>
-                  <div>
-                    <div>За 1 шт.{item.price + `₽`}</div>
-                    <div>Cумма{item.price * item.quantity}</div>
+                  <div className={styles.cartItemBlock}>
+                    <div className={styles.itemName}>{item.name}</div>
                     <div onClick={() => DELETE_ITEM(item)}>Удалить</div>
-                    <br/>
+                  </div>
+                  <div className={styles.itemQuantityBlock}>
                     <div className={styles.quantityCounter}>
-                      <div className={styles.leftCounter} onClick={() => INCREASE_QUANTITY(item)}>+</div>
-                      <div>{item.quantity}</div>
-                      <div className={styles.rightCounter} onClick={() => DECREASE_QUANTITY(item)}>-</div>
+                      <div className={styles.plusCounter} onClick={() => INCREASE_QUANTITY(item)}>+</div>
+                      <div className={styles.quantityCounter2}>{item.quantity}</div>
+                      <div className={styles.minusCounter} onClick={() => DECREASE_QUANTITY(item)}>-</div>
+                    </div>
+                    <div>
+                      {item.quantity > 1 && (<div>{item.price + `₽`} / шт.</div>)}
                     </div>
                   </div>
+                  <div className={styles.priceBlock}>
+                    <div style={{ fontSize: '20px'}}>{item.price * item.quantity}₽</div>
+                  </div>
+                </div>
+            ))}
+            </div>
         </div>
-      ))}
-      </div>
-      <TabAmount/>
+        <TabAmount />
+      </>
+        )
+        :
+        (
+          <div className={styles.emptyCart}>
+            <div>Корзина пустая</div>
+          </div>
+        )
+      }
     </div>
   )
 }

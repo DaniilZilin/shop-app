@@ -1,0 +1,48 @@
+.root {
+
+}
+
+.itemsModal {
+  display: none;
+  max-height: 300px;
+  margin-left: 800px;
+  margin-top: 65px;
+  background-color: #fefefe;
+  border: 2px solid grey;
+  position: absolute;
+  z-index: 9;
+}
+
+.itemsModal.add {
+  display: block;
+}
+
+.itemName {
+  height: 50px;
+  width: 250px;
+  color: red;
+  margin-left: 10px;
+}
+
+.itemContainer {
+  display: flex;
+  padding-bottom: 25px;
+}
+
+.goToCartButton {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.container {
+  overflow-y: auto;
+}
+
+.headerList {
+  display: flex;
+  flex-direction: row-reverse;
+}

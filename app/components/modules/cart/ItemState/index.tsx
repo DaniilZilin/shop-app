@@ -16,9 +16,12 @@ export default function ItemState({ item, AddToCart }: Props) {
   const router = useRouter()
 
   React.useEffect(() => {
-    if (cartItems.map(cartItem => (item.id === cartItem.id) ? setStatus(false) : null)) {
+    if (cartItems.find(cartItem => item.id === cartItem.id)) {
+      setStatus(false)
+    } else {
+      setStatus(true)
     }
-  }, [ status, setStatus ])
+  })
 
   const controlStatus = React.useCallback(() => {
     if (status) {
