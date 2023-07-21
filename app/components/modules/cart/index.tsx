@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { useTypesSelector } from '../../../hooks/useTypedSelector'
 import { useDispatch } from 'react-redux'
 import { Item } from "../../../types"
@@ -16,18 +16,69 @@ export default function Cart() {
   //   dispatch({ type: 'SET_CART', payload: JSON.parse(localStorage.getItem('cartItems'))})
   // }, [])
 
+  // const [ isCheckAll, setIsCheckAll ] = React.useState(true)
+  const [ isCheck, setIsCheck ] = React.useState<any[]>(cartItems)
+
   const INCREASE_QUANTITY = (item: Item) => {
     dispatch({ type: 'INCREASE_QUANTITY', payload: item })
-    console.log(cartItems)
+    if (isCheck.find(cartitem => cartitem.id === item.id)) {
+      // change quantity param
+    } else {
+      setIsCheck([...isCheck, item])
+    }
   }
 
   const DECREASE_QUANTITY = (item: Item) => {
     dispatch({ type: 'DECREASE_QUANTITY', payload: item })
+    setIsCheck(([...isCheck]))
   }
 
   const DELETE_ITEM = (item: Item) => {
     dispatch({ type: 'DELETE_ITEM', payload: item })
   }
+
+  const DELETE_ITEMS = (isCheck: any[]) => {
+    dispatch({ type: 'DELETE_ITEMS', payload: isCheck })
+  }
+
+  React.useEffect(() => {
+    console.log(isCheck)
+    console.log(isCheckAll)
+  })
+
+  const defaultChecked = React.useCallback((item: Item) => {
+    const found = (isCheck.find((item1) => item1.id === item.id))
+    return found !== false;
+  }, [ isCheck, setIsCheck ])
+
+  const addChecked = (item: Item) => {
+    setIsCheck([...isCheck, item]);
+  }
+
+  const removeChecked = (item: Item) => {
+    const toBeRemove = isCheck.find(cartitem => cartitem.id === item.id)
+
+    if (toBeRemove) {
+      isCheck.splice(isCheck.indexOf(toBeRemove), 1)
+      setIsCheck([...isCheck]);
+    }
+  };
+
+  const handleChange = React.useCallback((checked: boolean, item: Item) => {
+    if (checked) {
+      addChecked(item)
+    } else {
+      removeChecked(item)
+    }
+  }, [ setIsCheck, isCheck ])
+
+  const handleCheckbox = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (isCheckAll) {
+      setIsCheck([]);
+    } else setIsCheck([...cartItems])
+  }, [])
+
+  const isCheckAll = isCheck.length === cartItems.length
 
   return (
     <div className={styles.root}>
@@ -37,17 +88,24 @@ export default function Cart() {
             {cartItems.length > 1 && (
               <div className={styles.massSelection}>
                 <div style={{ display: 'flex'}}>
-                  <input type="checkbox"/>
+                  <input type="checkbox"
+                    onChange={handleCheckbox}
+                    checked={isCheckAll}
+                  />
                   <div>Выбрать все</div>
                 </div>
-                <div>Удалить выбранные</div>
+                <div onClick={() => DELETE_ITEMS(isCheck)}>Удалить выбранные</div>
               </div>
             )}
             <div className={styles.itemsBlock}>
             {cartItems?.map((item: Item) => (
                 <div className={styles.itemBlock}>
                   {cartItems.length > 1 && (
-                    <CheckBoxItem />
+                    <CheckBoxItem
+                      onChange={handleChange}
+                      item={item}
+                      checked={defaultChecked(item)}
+                    />
                   )}
                   <div className={styles.cartImage}>
                     <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="150" height="150" alt=""/>
@@ -73,7 +131,7 @@ export default function Cart() {
             ))}
             </div>
         </div>
-        <TabAmount />
+        <TabAmount isCheck={isCheck} />
       </>
         )
         :

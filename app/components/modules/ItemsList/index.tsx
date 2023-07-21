@@ -16,16 +16,9 @@ export interface Props {
 }
 
 export default function ItemsList({ items }: Props) {
-  const [ initialQueryParams, setInitialQueryParams ] = React.useState<string>()
-  const [ queryParams, setQueryParams ] = React.useState<string>()
-  const { data } = useSWR(queryParams ? `/api/v1/items_list/${queryParams}` : null, fetcher)
+  const [ queryParams, setQueryParams ] = React.useState<boolean>(true)
+  const { data } = useSWR(queryParams ? `/api/v1/items_list/list/` : null, fetcher)
 
-  React.useEffect(() => {
-    if (document.location.search) {
-      setQueryParams(document.location.search.slice(1))
-      setInitialQueryParams(document.location.search.slice(1))
-    }
-  }, [])
 
   // const priceFilter = React.useCallback((values: Record<string, any>) => {
   //   console.log(values)

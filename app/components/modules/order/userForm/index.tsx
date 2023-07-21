@@ -20,7 +20,8 @@ export default function UserForm({ setUserId }: Props) {
   }, [])
 
   React.useEffect(() => {
-    emailRef.current.input.focus()
+    // @ts-ignore
+      emailRef.current.input.focus()
   })
 
   React.useEffect(() => {

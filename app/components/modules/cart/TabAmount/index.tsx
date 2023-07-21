@@ -4,12 +4,16 @@ import { useRouter } from 'next/router'
 import styles from '../cart.module.css'
 import { useTypesSelector } from '../../../../hooks/useTypedSelector'
 
+export interface Props {
+  isCheck: any[];
+}
 
-export default function TabAmount() {
+
+export default function TabAmount({ isCheck }: Props) {
   const { cartItems } = useTypesSelector(state => state.user)
   const router = useRouter()
 
-  const goodsName = cartItems.length > 1  ? 'товара' : 'товар'
+  const goodsName = isCheck.length > 1  ? 'товара' : 'товар'
 
   return (
     <div className={styles.totalSumBlock}>
@@ -18,9 +22,9 @@ export default function TabAmount() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end'}}>
         <div>
           <div style={{ fontSize: '12px', color: '#8c8c8c' }}>Итого</div>
-          <div>{cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0)} {goodsName}</div>
+          <div>{isCheck.reduce((accumulator, item) => accumulator + item.quantity, 0)} {goodsName}</div>
         </div>
-          <div>{cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}₽</div>
+          <div>{isCheck.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}₽</div>
       </div>
       </div>
         <div className={styles.continueButton} onClick={() => router.push('/route/order/')}>

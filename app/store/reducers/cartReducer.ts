@@ -21,6 +21,8 @@ export const cartReducer = (state = initialState, action: UserAction): CartState
     case UserActionTypes.DELETE_ITEM:
       return {...state, cartItems: state.cartItems = state.cartItems.filter((item) => item.id !== action.payload.id)}
 
+    case UserActionTypes.DELETE_ITEMS:
+      return {...state, cartItems: state.cartItems = state.cartItems.filter(item => !action.payload.includes(item))}
     default:
       return {...state}
   }
