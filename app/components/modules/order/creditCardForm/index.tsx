@@ -31,7 +31,7 @@ export default function CreditCard({ setValues }: Props) {
 
   React.useEffect(() => {
     // forceUpdate()
-      setRerender(!rerender)
+    setRerender(!rerender)
     if (cardNumberRef.current.input.textLength >= 19) {
       expirationDate2.current.input.focus()
     }

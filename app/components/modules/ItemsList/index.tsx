@@ -9,7 +9,7 @@ import styles from './ItemsList.module.css'
 import fetcher from '../../../utils/fetcher'
 import { useDispatch } from 'react-redux'
 import { useTypesSelector } from '../../../hooks/useTypedSelector'
-import ItemState from '../cart/ItemState'
+import AddToCartButton from '../cart/AddToCartButton'
 
 export interface Props {
   items: Item[]
@@ -30,17 +30,18 @@ export default function ItemsList({ items }: Props) {
   const { cartItems } = useTypesSelector(state => state.user)
   const dispatch = useDispatch()
 
-  // const setCart = () => {
-  //   localStorage.setItem('cartItems', JSON.stringify(cartItems))
-  //   dispatch({ type: 'SET_CART', payload: JSON.parse(localStorage.getItem('cartItems'))})
-  //   // localStorage.setItem('cartFullPrice', JSON.stringify(cartFullPrice))
-  // }
+  const setCart = () => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems))
+    dispatch({ type: 'SET_CART', payload: JSON.parse(localStorage.getItem('cartItems'))})
+    // localStorage.setItem('cartFullPrice', JSON.stringify(cartFullPrice))
+  }
 
-  const AddToCart = (item: Item) => {
+  const addToCart = (item: Item) => {
     dispatch({ type: 'ADD_TO_CART', payload: item })
     // setCart()
     // localStorage.setItem('cartItems', JSON.stringify(cartItems))
   }
+
   React.useEffect(() => {
     // setCart()
   }, [])
@@ -68,7 +69,7 @@ export default function ItemsList({ items }: Props) {
             </div>
             <div className={styles.priceBox}>
               <div>{item.price + `₽`}</div>
-              <ItemState item={item} AddToCart={AddToCart} />
+              <AddToCartButton item={item} />
             </div>
           </div>
       ))}

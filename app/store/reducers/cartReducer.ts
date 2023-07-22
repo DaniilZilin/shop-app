@@ -10,7 +10,7 @@ export const cartReducer = (state = initialState, action: UserAction): CartState
       return { ...state, cartItems: [...state.cartItems, action.payload] }
 
     case UserActionTypes.SET_CART:
-      return { ...state, cartItems: state.cartItems.concat(action.payload) }
+      return { ...state, cartItems: action.payload }
 
     case UserActionTypes.INCREASE_QUANTITY:
       return { ...state, cartItems: state.cartItems.map(item => item.id === action.payload.id ? {...item, quantity: item.quantity + 1} : item )}
