@@ -1,7 +1,7 @@
 import React from 'react'
 
-import MainLayout from '../../app/Layout'
-import CartView from '../../app/views/Cart'
+import MainLayout from '../app/Layout'
+import CartView from '../app/views/Cart'
 
 export interface Props {
 

@@ -16,14 +16,15 @@ export const cartReducer = (state = initialState, action: UserAction): CartState
       return { ...state, cartItems: state.cartItems.map(item => item.id === action.payload.id ? {...item, quantity: item.quantity + 1} : item )}
 
     case UserActionTypes.DECREASE_QUANTITY:
-      return {...state, cartItems: state.cartItems.map(item => item.id === action.payload.id ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : item.quantity = 1}: item )}
+      return { ...state, cartItems: state.cartItems.map(item => item.id === action.payload.id ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : item.quantity = 1}: item )}
 
     case UserActionTypes.DELETE_ITEM:
-      return {...state, cartItems: state.cartItems = state.cartItems.filter((item) => item.id !== action.payload.id)}
+      return { ...state, cartItems: state.cartItems.filter((item) => item.id !== action.payload.id)}
 
     case UserActionTypes.DELETE_ITEMS:
-      return {...state, cartItems: state.cartItems = state.cartItems.filter(item => !action.payload.includes(item))}
+      return { ...state, cartItems: state.cartItems.filter(item => !action.payload.includes(item))}
+
     default:
-      return {...state}
+      return { ...state}
   }
 }

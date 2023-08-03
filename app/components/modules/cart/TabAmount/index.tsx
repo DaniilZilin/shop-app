@@ -1,8 +1,8 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 
 import styles from '../cart.module.css'
 import { useTypesSelector } from '../../../../hooks/useTypedSelector'
+import Link from 'next/link'
 
 export interface Props {
   isCheck: any[];
@@ -11,8 +11,6 @@ export interface Props {
 
 export default function TabAmount({ isCheck }: Props) {
   const { cartItems } = useTypesSelector(state => state.user)
-  const router = useRouter()
-
   const goodsName = isCheck.length > 1  ? 'товара' : 'товар'
 
   return (
@@ -27,9 +25,7 @@ export default function TabAmount({ isCheck }: Props) {
           <div>{isCheck.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}₽</div>
       </div>
       </div>
-        <div className={styles.continueButton} onClick={() => router.push('/route/order/')}>
-          <p className={styles.continueButtonText}>Перейти к оформлению</p>
-        </div>
+        <Link className={styles.continueButton} href='/order'>Перейти к оформлению</Link>
     </div>
   )
 }

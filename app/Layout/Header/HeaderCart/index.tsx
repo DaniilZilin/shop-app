@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import classNames from 'classnames'
 
 import styles from '../Header.module.css'
@@ -7,7 +7,9 @@ import Image from 'next/image'
 import { useTypesSelector } from '../../../hooks/useTypedSelector'
 import { useDispatch } from 'react-redux'
 import { Menu, MenuProps } from 'antd'
+import Link from 'next/link'
 
+import { store } from '../../../store'
 
 export default function HeaderCart() {
   const { cartItems } = useTypesSelector(state => state.user)
@@ -43,9 +45,28 @@ export default function HeaderCart() {
     label: `${cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0)} ${cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}₽`,
   }]), [cartItems])
 
+  const [ stateChanges, setStateChanges ] = React.useState<boolean>(false)
+
+  // React.useEffect(() => {
+  //   let currentValue: any = JSON.parse(localStorage.getItem('cart')) || []
+  //   const storeChange = store.subscribe(() => {
+  //     let previousValue = currentValue
+  //     currentValue = store.getState().user.cartItems
+  //     if (currentValue.length > previousValue.length) {
+  //       console.log(true)
+  //       // setStateChanges(true)
+  //     } else {
+  //       console.log(false)
+  //     }
+  //   })
+  //   return () => storeChange()
+  // }, [ ])
+
+
   return (
-    <>
-      <div className={classNames(styles.itemsModal, {[styles.add]: cartItems.length >= 1})}>
+    // <div className={styles.root}>
+    <div className={classNames(styles.root, {[styles.true]: stateChanges})}>
+      <div className={styles.itemsModal}>
         <div className={styles.container}>
           {cartItems.map((item: Item) => (
             <div className={styles.itemContainer}>
@@ -56,11 +77,10 @@ export default function HeaderCart() {
             </div>
           ))}
         </div>
-        {/*<div className={styles.goToCartButton} onClick={() => router.push('/route/cart/')}>В корзину</div>*/}
-        {/*<div className={styles.goToCartButton} onClick={() => router.push('/route/cart/')}>В корзину</div>*/}
+        <Link className={styles.goToCartButton} href='/cart'>В корзину</Link>
       </div>
       <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} items={total}>
       </Menu>
-    </>
+    </div>
   )
 }

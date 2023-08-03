@@ -5,80 +5,76 @@ import { Item } from "../../../types"
 import styles from './cart.module.css'
 import Image from 'next/image'
 
-import TabAmount from './TabAmount'
 import CheckBoxItem from './CheckBoxItem'
+import Link from 'next/link'
 
 export default function Cart() {
   const { cartItems } = useTypesSelector(state => state.user)
   const dispatch = useDispatch()
 
-  // React.useEffect(() => {
-  //   dispatch({ type: 'SET_CART', payload: JSON.parse(localStorage.getItem('cartItems'))})
-  // }, [])
-
-  // const [ isCheckAll, setIsCheckAll ] = React.useState(true)
-  const [ isCheck, setIsCheck ] = React.useState<any[]>(cartItems)
-
-  const INCREASE_QUANTITY = (item: Item) => {
-    dispatch({ type: 'INCREASE_QUANTITY', payload: item })
-    if (isCheck.find(cartitem => cartitem.id === item.id)) {
-      // change quantity param
-    } else {
-      setIsCheck([...isCheck, item])
-    }
-  }
-
-  const DECREASE_QUANTITY = (item: Item) => {
-    dispatch({ type: 'DECREASE_QUANTITY', payload: item })
-    setIsCheck(([...isCheck]))
-  }
-
   const DELETE_ITEM = (item: Item) => {
     dispatch({ type: 'DELETE_ITEM', payload: item })
   }
 
-  const DELETE_ITEMS = (isCheck: any[]) => {
-    dispatch({ type: 'DELETE_ITEMS', payload: isCheck })
-  }
+  const [ isCheck, setIsCheck ] = React.useState<any[]>([])
 
-  React.useEffect(() => {
-    console.log(isCheck)
-    console.log(isCheckAll)
-  })
-
-  const defaultChecked = React.useCallback((item: Item) => {
-    const found = (isCheck.find((item1) => item1.id === item.id))
-    return found !== false;
-  }, [ isCheck, setIsCheck ])
-
-  const addChecked = (item: Item) => {
-    setIsCheck([...isCheck, item]);
-  }
-
-  const removeChecked = (item: Item) => {
-    const toBeRemove = isCheck.find(cartitem => cartitem.id === item.id)
-
-    if (toBeRemove) {
-      isCheck.splice(isCheck.indexOf(toBeRemove), 1)
-      setIsCheck([...isCheck]);
-    }
-  };
-
-  const handleChange = React.useCallback((checked: boolean, item: Item) => {
-    if (checked) {
-      addChecked(item)
-    } else {
-      removeChecked(item)
+  const onQuantity = React.useCallback((item: Item) => {
+    if (isCheck.find(item1 => item1.id === item.id) === undefined) {
+      setIsCheck([...isCheck, item])
     }
   }, [ setIsCheck, isCheck ])
 
-  const handleCheckbox = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (isCheckAll) {
-      setIsCheck([]);
-    } else setIsCheck([...cartItems])
+  const INCREASE_QUANTITY = (item: Item) => {
+    dispatch({ type: 'INCREASE_QUANTITY', payload: item })
+  }
+
+  const DECREASE_QUANTITY = (item: Item) => {
+    dispatch({ type: 'DECREASE_QUANTITY', payload: item })
+  }
+
+  React.useEffect(() => {
+    setIsCheck(cartItems)
   }, [])
 
-  const isCheckAll = isCheck.length === cartItems.length
+  // React.useEffect(() => {
+  //   setIsCheck(cartItems)
+  // }, [ setIsCheck, cartItems ])
+
+  const selectAllHandleChange = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.checked) {
+      setIsCheck([])
+    } else {
+      setIsCheck(cartItems)
+    }
+  }, [ setIsCheck, cartItems ])
+
+  const handleChange = React.useCallback((checked: boolean, item: Item) => {
+    if (!checked) {
+      setIsCheck(isCheck.filter(item1 => item1.id !== item.id))
+    } else {
+      setIsCheck([...isCheck, item])
+    }
+  }, [ setIsCheck, isCheck ])
+
+  const isTheSame = React.useMemo(() => {
+    return isCheck.length === cartItems.length
+  }, [ isCheck ])
+
+  const totalCartName = React.useMemo(() => {
+    const totalAmount = isCheck.reduce((accumulator, item) => accumulator + item.quantity, 0)
+    if (totalAmount === 1 || totalAmount === 21 || totalAmount === 41) {
+      return 'товар'
+    } else if (totalAmount >= 2 && totalAmount <= 4) {
+      return 'товара'
+    } else {
+      return 'товаров'
+    }
+  }, [ isCheck ])
+
+  const DELETE_ITEMS = React.useCallback((isCheck: any[]) => {
+    dispatch({ type: 'DELETE_ITEMS', payload: isCheck })
+    setIsCheck(isCheck)
+  }, [ isCheck, setIsCheck ])
 
   return (
     <div className={styles.root}>
@@ -89,8 +85,8 @@ export default function Cart() {
               <div className={styles.massSelection}>
                 <div style={{ display: 'flex'}}>
                   <input type="checkbox"
-                    onChange={handleCheckbox}
-                    checked={isCheckAll}
+                    checked={isTheSame}
+                    onChange={selectAllHandleChange}
                   />
                   <div>Выбрать все</div>
                 </div>
@@ -102,9 +98,9 @@ export default function Cart() {
                 <div className={styles.itemBlock}>
                   {cartItems.length > 1 && (
                     <CheckBoxItem
-                      onChange={handleChange}
                       item={item}
-                      checked={defaultChecked(item)}
+                      checked={isCheck.find(item1 => item1.id == item.id)}
+                      onChange={handleChange}
                     />
                   )}
                   <div className={styles.cartImage}>
@@ -131,7 +127,32 @@ export default function Cart() {
             ))}
             </div>
         </div>
-        <TabAmount isCheck={isCheck} />
+        <div className={styles.totalSumBlock}>
+          {isCheck.length >= 1 ? (
+            <>
+              <div>
+                <div style={{fontSize: '24px'}}>Детали заказа</div>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+                  <div>
+                    <div style={{fontSize: '12px', color: '#8c8c8c'}}>Итого</div>
+                    <div>{isCheck.reduce((accumulator, item) => accumulator + item.quantity, 0)} {totalCartName}</div>
+                  </div>
+                  <div>{isCheck.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}₽</div>
+                </div>
+              </div>
+            <Link className={styles.continueButton} href='/order'>Перейти к оформлению</Link>
+            </>
+          )
+          :
+          (
+            <>
+              <div>
+                <div style={{fontSize: '24px'}}>Товары не выбраны</div>
+                <div className={styles.continueButton}>Перейти к оформлению</div>
+              </div>
+            </>
+          )}
+        </div>
       </>
         )
         :

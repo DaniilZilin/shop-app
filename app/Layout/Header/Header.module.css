@@ -1,16 +1,36 @@
 .root {
+  background-color: white;
+  float: right;
+  text-align: right;
+  position: relative;
+}
 
+.root.true {
+  background-color: white;
+  height: 250px;
+  width: 300px;
+  border: 2px solid red;
+  right: 0;
+  position: absolute;
+  transition: 0.1s all;
+  transform-origin: 100% 0%;
+  transform: scale(1);
 }
 
 .itemsModal {
-  display: none;
-  max-height: 300px;
-  margin-left: 800px;
-  margin-top: 65px;
-  background-color: #fefefe;
-  border: 2px solid grey;
+  background-color: white;
+  height: 250px;
+  width: 300px;
+  border: 2px solid red;
+  right: 0;
   position: absolute;
-  z-index: -1;
+  transition: 0.1s all;
+  transform: scale(0) ;
+  transform-origin: 100% 0%;
+}
+
+.root:hover > .itemsModal {
+  transform: scale(1);
 }
 
 .itemsModal.add {

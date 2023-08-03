@@ -29,9 +29,9 @@ export default function ContentLayout({ children }: Props) {
           <>
             Сортировать:
             <Divider type="vertical" />
-              <Link href='route?sort=price' passHref>по возрастанию цены</Link>
+              <Link href='pages?sort=price' passHref>по возрастанию цены</Link>
             <Divider type="vertical" />
-              <Link href='route?sort=aprice' passHref>по убыванию цены</Link>
+              <Link href='pages?sort=aprice' passHref>по убыванию цены</Link>
           </>
 {/*     <Breadcrumb.Item>Home</Breadcrumb.Item>
         <Breadcrumb.Item>List</Breadcrumb.Item>

@@ -11,10 +11,15 @@ export interface Props {
   width: number,
   height: number,
   maxLength: number,
+  onChange(length: number): void,
 }
 
 // React.forwardRef(function Input2({ meta, input, width, height, maxLength, label }: Props, ref) {
-const Input2 = React.forwardRef(function Input2({ meta, input, label, width, height, maxLength }: Props, ref) {
+const Input2 = React.forwardRef(function Input2({ meta, input, label, width, height, maxLength, onChange }: Props, ref) {
+  const handleChange = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.maxLength)
+  }, [ onChange ])
+
   return (
     <Field meta={meta} input={input} label={label}>
       <Space direction="horizontal">

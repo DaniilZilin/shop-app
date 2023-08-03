@@ -292,6 +292,11 @@
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
 
+"@types/inputmask@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@types/inputmask/-/inputmask-5.0.3.tgz#f23492d5b5862c5737ae24bfe9fb8b2acf77b453"
+  integrity sha512-9aTXacRhf9D3+porVydLR28ll8/y3TQIrXEXv7ZWY0c3Lzl/1r4nHoaesZeh2Fd+UIefpWZrg2tkSnDn/dKUsw==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"

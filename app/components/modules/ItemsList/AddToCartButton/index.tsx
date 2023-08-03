@@ -19,7 +19,7 @@ export default function AddToCartButton({ item }: Props) {
   const isInCart = React.useMemo(() => cartItems.find(cartItem => item.id === cartItem.id), [item, cartItems])
 
   if (isInCart) {
-    return <Link href='/route/cart'>Перейти в корзину</Link>
+    return <Link href='/cart'>Перейти в корзину</Link>
   } else {
     return <div onClick={handleAddToCartClick}>Добавить в корзину</div>
   }
