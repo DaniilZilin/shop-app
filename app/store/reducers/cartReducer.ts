@@ -2,6 +2,7 @@ import { CartState, UserAction, UserActionTypes } from '../../types'
 
 const initialState: CartState = {
   cartItems: [],
+  isLoaded: false
 }
 
 export const cartReducer = (state = initialState, action: UserAction): CartState => {
@@ -10,7 +11,7 @@ export const cartReducer = (state = initialState, action: UserAction): CartState
       return { ...state, cartItems: [...state.cartItems, action.payload] }
 
     case UserActionTypes.SET_CART:
-      return { ...state, cartItems: action.payload }
+      return { ...state, cartItems: action.payload, isLoaded: true }
 
     case UserActionTypes.INCREASE_QUANTITY:
       return { ...state, cartItems: state.cartItems.map(item => item.id === action.payload.id ? {...item, quantity: item.quantity + 1} : item )}
@@ -22,7 +23,8 @@ export const cartReducer = (state = initialState, action: UserAction): CartState
       return { ...state, cartItems: state.cartItems.filter((item) => item.id !== action.payload.id)}
 
     case UserActionTypes.DELETE_ITEMS:
-      return { ...state, cartItems: state.cartItems.filter(item => !action.payload.includes(item))}
+
+      return { ...state, cartItems: state.cartItems.filter(item => !action.payload.includes(item.id)) }
 
     default:
       return { ...state}

@@ -10,8 +10,14 @@ import { Menu, MenuProps } from 'antd'
 import Link from 'next/link'
 
 import { store } from '../../../store'
+import MiniCart from "./MiniCart";
 
-export default function HeaderCart() {
+export interface Props {
+  shouldDisplayMiniCart: boolean
+  setShouldDisplayMiniCart(shouldDisplayMiniCart: boolean): void
+}
+
+export default function HeaderCart({ shouldDisplayMiniCart, setShouldDisplayMiniCart}: Props) {
   const { cartItems } = useTypesSelector(state => state.user)
   const dispatch = useDispatch()
 
@@ -47,38 +53,17 @@ export default function HeaderCart() {
 
   const [ stateChanges, setStateChanges ] = React.useState<boolean>(false)
 
-  // React.useEffect(() => {
-  //   let currentValue: any = JSON.parse(localStorage.getItem('cart')) || []
-  //   const storeChange = store.subscribe(() => {
-  //     let previousValue = currentValue
-  //     currentValue = store.getState().user.cartItems
-  //     if (currentValue.length > previousValue.length) {
-  //       console.log(true)
-  //       // setStateChanges(true)
-  //     } else {
-  //       console.log(false)
-  //     }
-  //   })
-  //   return () => storeChange()
-  // }, [ ])
+  const handleMouseOver = React.useCallback(() => {
+    setShouldDisplayMiniCart(true)
+  }, [ shouldDisplayMiniCart ])
 
+  const handleMouseOut = React.useCallback(() => {
+    setShouldDisplayMiniCart(false)
+  }, [ shouldDisplayMiniCart ])
 
   return (
-    // <div className={styles.root}>
-    <div className={classNames(styles.root, {[styles.true]: stateChanges})}>
-      <div className={styles.itemsModal}>
-        <div className={styles.container}>
-          {cartItems.map((item: Item) => (
-            <div className={styles.itemContainer}>
-              <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="50" height="50"
-                     alt=""/>
-              <div className={styles.itemName}>{item.name}</div>
-              <Image onClick={() => removeItem(item)} src={`/img/garbage.png`} width="20" height="20" alt=""/>
-            </div>
-          ))}
-        </div>
-        <Link className={styles.goToCartButton} href='/cart'>В корзину</Link>
-      </div>
+    <div className={styles.root} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      {shouldDisplayMiniCart && <MiniCart cartItems={cartItems} />}
       <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} items={total}>
       </Menu>
     </div>

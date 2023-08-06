@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import Field from '../Field'
 
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
@@ -16,10 +16,6 @@ export interface Props {
 
 // React.forwardRef(function Input2({ meta, input, width, height, maxLength, label }: Props, ref) {
 const Input2 = React.forwardRef(function Input2({ meta, input, label, width, height, maxLength, onChange }: Props, ref) {
-  const handleChange = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.maxLength)
-  }, [ onChange ])
-
   return (
     <Field meta={meta} input={input} label={label}>
       <Space direction="horizontal">

@@ -18,14 +18,10 @@ export default function UserForm({ setUserId }: Props) {
     setUserId(true)
   }, [])
 
-  React.useEffect(() => {
-    // @ts-ignore
-      emailRef.current.input.focus()
-  })
-
-  React.useEffect(() => {
-
-  })
+  // React.useEffect(() => {
+  //   // @ts-ignore
+  //     emailRef.current.input.focus()
+  // })
 
   return (
     <MainLayout>
@@ -37,7 +33,7 @@ export default function UserForm({ setUserId }: Props) {
         onSubmit={onSubmit}
         render={({ handleSubmit, submitting}) => (
           <form onSubmit={ handleSubmit }>
-            <Field name="email" label="E-mail" component={Input} ref={emailRef} validate={email} width={250} />
+            <Field name="email" label="E-mail" component={Input} validate={email} width={250} />
             <Field name="phoneNumber" label="Телефон" component={PhoneNumber} width={250} />
             <Field name="firstName" label="Имя" component={Input} width={250} />
             <Field name="lastName" label="Фамилия" component={Input} width={250} />

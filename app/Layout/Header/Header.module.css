@@ -24,14 +24,14 @@
   border: 2px solid red;
   right: 0;
   position: absolute;
-  transition: 0.1s all;
-  transform: scale(0) ;
-  transform-origin: 100% 0%;
+  /*transition: 0.1s all;*/
+  /*transform: scale(0) ;*/
+  /*transform-origin: 100% 0%;*/
 }
 
-.root:hover > .itemsModal {
-  transform: scale(1);
-}
+/*.root:hover > .itemsModal {*/
+/*  transform: scale(1);*/
+/*}*/
 
 .itemsModal.add {
   display: block;

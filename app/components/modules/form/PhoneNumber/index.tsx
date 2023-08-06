@@ -1,17 +1,20 @@
 import React from 'react'
-// import Inputmask from 'inputmask'
+import Field from '../Field'
 
-export default function PhoneNumber() {
-  const maskRef = React.useRef(null)
-  const [ Complete, setComplete ] = React.useState<string>('')
+export interface Props {
+  meta: any,
+  input: any,
+  label: string,
+  width: number,
+  height: number,
+  maxLength: number,
+}
 
-  // React.useEffect(() => {
-  //   Inputmask({regex: '^+7 (/d{3}) /d{3} /d{2} /d{2}$'}).mask(maskRef.current)
-  // }, [])
 
+export default function PhoneNumber({meta, input, label, width,height, maxLength}: Props) {
   return (
-    <div>
-      <input ref={maskRef} />
-    </div>
+    <Field meta={meta} input={input} label={label}>
+      {/*<InputMask mask='+7 ()' />*/}
+    </Field>
   )
 }

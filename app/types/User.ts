@@ -9,6 +9,7 @@ export enum UserActionTypes {
 
 export interface CartState {
   cartItems: any[]
+  isLoaded: boolean
 }
 
 interface ADD_TO_CART {

@@ -3,144 +3,101 @@ import { useTypesSelector } from '../../../hooks/useTypedSelector'
 import { useDispatch } from 'react-redux'
 import { Item } from "../../../types"
 import styles from './cart.module.css'
-import Image from 'next/image'
 
-import CheckBoxItem from './CheckBoxItem'
 import Link from 'next/link'
+import CartItem from "./CartItem"
 
 export default function Cart() {
-  const { cartItems } = useTypesSelector(state => state.user)
   const dispatch = useDispatch()
+  const cartItems = useTypesSelector(state => state.user.cartItems)
+  const isLoaded = useTypesSelector(state => state.user.isLoaded)
 
-  const DELETE_ITEM = (item: Item) => {
-    dispatch({ type: 'DELETE_ITEM', payload: item })
-  }
-
-  const [ isCheck, setIsCheck ] = React.useState<any[]>([])
-
-  const onQuantity = React.useCallback((item: Item) => {
-    if (isCheck.find(item1 => item1.id === item.id) === undefined) {
-      setIsCheck([...isCheck, item])
-    }
-  }, [ setIsCheck, isCheck ])
-
-  const INCREASE_QUANTITY = (item: Item) => {
-    dispatch({ type: 'INCREASE_QUANTITY', payload: item })
-  }
-
-  const DECREASE_QUANTITY = (item: Item) => {
-    dispatch({ type: 'DECREASE_QUANTITY', payload: item })
-  }
+  const [ selectedItems, setSelectedItems ] = React.useState<any[]>([])
 
   React.useEffect(() => {
-    setIsCheck(cartItems)
-  }, [])
+    setSelectedItems(cartItems)
+  }, [isLoaded])
 
-  // React.useEffect(() => {
-  //   setIsCheck(cartItems)
-  // }, [ setIsCheck, cartItems ])
+  const isEverythingSelected = React.useMemo(() => {
+    return selectedItems.length === cartItems.length
+  }, [ selectedItems, cartItems ])
 
-  const selectAllHandleChange = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleSelectAllChange = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.checked) {
-      setIsCheck([])
+      setSelectedItems([])
     } else {
-      setIsCheck(cartItems)
+      setSelectedItems(cartItems)
     }
-  }, [ setIsCheck, cartItems ])
+  }, [setSelectedItems, cartItems])
 
-  const handleChange = React.useCallback((checked: boolean, item: Item) => {
-    if (!checked) {
-      setIsCheck(isCheck.filter(item1 => item1.id !== item.id))
-    } else {
-      setIsCheck([...isCheck, item])
-    }
-  }, [ setIsCheck, isCheck ])
+  const deleteItems = React.useCallback(() => {
+    dispatch({ type: 'DELETE_ITEMS', payload: selectedItems.map(item => item.id) })
+  }, [ selectedItems ])
 
-  const isTheSame = React.useMemo(() => {
-    return isCheck.length === cartItems.length
-  }, [ isCheck ])
+  React.useEffect(() => {
+    setSelectedItems(cartItems)
+  }, [ setSelectedItems, cartItems ])
 
   const totalCartName = React.useMemo(() => {
-    const totalAmount = isCheck.reduce((accumulator, item) => accumulator + item.quantity, 0)
-    if (totalAmount === 1 || totalAmount === 21 || totalAmount === 41) {
+    const totalAmount: string = String(selectedItems.reduce((accumulator, item) => accumulator + item.quantity, 0))
+    console.log(totalAmount.slice(-2))
+    if (totalAmount.slice(-1) === '1' && totalAmount.slice(-2) !== '11') {
+      // заканчивается на 1 но не на 11
       return 'товар'
-    } else if (totalAmount >= 2 && totalAmount <= 4) {
+    } else if ((totalAmount.slice(-1) === '2' || totalAmount.slice(-1) === '3' || totalAmount.slice(-1) === '4' &&
+      totalAmount.slice(-2) !== '12' && totalAmount.slice(-2) !== '13' && totalAmount.slice(-2) !== '14')) {
+      // заканчивается 2,3,4 но не 12, 13, 14
       return 'товара'
     } else {
       return 'товаров'
     }
-  }, [ isCheck ])
+  }, [ selectedItems ])
 
-  const DELETE_ITEMS = React.useCallback((isCheck: any[]) => {
-    dispatch({ type: 'DELETE_ITEMS', payload: isCheck })
-    setIsCheck(isCheck)
-  }, [ isCheck, setIsCheck ])
+  if (!cartItems.length) {
+    return (
+      <div className={styles.root}>
+        <div className={styles.emptyCart}>
+          <div>Корзина пустая</div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.root}>
-      {cartItems.length >= 1 ? (
-      <>
-        <div>
-            {cartItems.length > 1 && (
-              <div className={styles.massSelection}>
-                <div style={{ display: 'flex'}}>
-                  <input type="checkbox"
-                    checked={isTheSame}
-                    onChange={selectAllHandleChange}
-                  />
-                  <div>Выбрать все</div>
-                </div>
-                <div onClick={() => DELETE_ITEMS(isCheck)}>Удалить выбранные</div>
-              </div>
-            )}
-            <div className={styles.itemsBlock}>
-            {cartItems?.map((item: Item) => (
-                <div className={styles.itemBlock}>
-                  {cartItems.length > 1 && (
-                    <CheckBoxItem
-                      item={item}
-                      checked={isCheck.find(item1 => item1.id == item.id)}
-                      onChange={handleChange}
-                    />
-                  )}
-                  <div className={styles.cartImage}>
-                    <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="150" height="150" alt=""/>
-                  </div>
-                  <div className={styles.cartItemBlock}>
-                    <div className={styles.itemName}>{item.name}</div>
-                    <div onClick={() => DELETE_ITEM(item)}>Удалить</div>
-                  </div>
-                  <div className={styles.itemQuantityBlock}>
-                    <div className={styles.quantityCounter}>
-                      <div className={styles.plusCounter} onClick={() => INCREASE_QUANTITY(item)}>+</div>
-                      <div className={styles.quantityCounter2}>{item.quantity}</div>
-                      <div className={styles.minusCounter} onClick={() => DECREASE_QUANTITY(item)}>-</div>
-                    </div>
-                    <div>
-                      {item.quantity > 1 && (<div>{item.price + `₽`} / шт.</div>)}
-                    </div>
-                  </div>
-                  <div className={styles.priceBlock}>
-                    <div style={{ fontSize: '20px'}}>{item.price * item.quantity}₽</div>
-                  </div>
-                </div>
-            ))}
+      <div>
+        {cartItems.length > 1 && (
+          <div className={styles.massSelection}>
+            <div style={{display: 'flex'}}>
+              <input type="checkbox"
+                     checked={isEverythingSelected}
+                     onChange={handleSelectAllChange}
+              />
+              <div>Выбрать все</div>
             </div>
+            <div onClick={deleteItems}>Удалить выбранные</div>
+          </div>
+        )}
+        <div className={styles.itemsBlock}>
+          {cartItems?.map((item: Item) => (
+            <CartItem item={item} selectedItems={selectedItems} setSelectedItems={setSelectedItems} isOnlyItem={cartItems.length === 1}/>
+          ))}
         </div>
-        <div className={styles.totalSumBlock}>
-          {isCheck.length >= 1 ? (
+      </div>
+      <div className={styles.totalSumBlock}>
+        {selectedItems.length >= 1 ? (
             <>
               <div>
                 <div style={{fontSize: '24px'}}>Детали заказа</div>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end'}}>
                   <div>
                     <div style={{fontSize: '12px', color: '#8c8c8c'}}>Итого</div>
-                    <div>{isCheck.reduce((accumulator, item) => accumulator + item.quantity, 0)} {totalCartName}</div>
+                    <div>{selectedItems.reduce((accumulator, item) => accumulator + item.quantity, 0)} {totalCartName}</div>
                   </div>
-                  <div>{isCheck.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}₽</div>
+                  <div>{selectedItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}₽</div>
                 </div>
               </div>
-            <Link className={styles.continueButton} href='/order'>Перейти к оформлению</Link>
+              <Link className={styles.continueButton} href='/order'>Перейти к оформлению</Link>
             </>
           )
           :
@@ -152,18 +109,7 @@ export default function Cart() {
               </div>
             </>
           )}
-        </div>
-      </>
-        )
-        :
-        (
-          <div className={styles.emptyCart}>
-            <div>Корзина пустая</div>
-          </div>
-        )
-      }
+      </div>
     </div>
   )
 }
-
-
