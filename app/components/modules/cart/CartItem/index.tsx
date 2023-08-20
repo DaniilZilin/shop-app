@@ -1,10 +1,10 @@
-import React, {ChangeEvent} from 'react'
-import styles from "../cart.module.css";
-import CheckBoxItem from "../CheckBoxItem";
-import Image from "next/image";
+import React from 'react'
+import styles from '../cart.module.css'
+import CheckBoxItem from '../CheckBoxItem'
+import Image from 'next/image'
 
 import { Item } from '../../../../types'
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux'
 
 export interface Props {
   item: Item;
@@ -13,28 +13,25 @@ export interface Props {
   isOnlyItem: boolean;
 }
 
-
 export default function CartItem({ item, selectedItems, setSelectedItems, isOnlyItem }: Props) {
   const dispatch = useDispatch()
 
   const increaseQuantityHandleClick = React.useCallback(() => {
     dispatch({ type: 'INCREASE_QUANTITY', payload: item })
-  }, [ item ])
+    setSelectedItems(selectedItems.map(item1 => item1.id === item.id ? {...item, quantity: item.quantity + 1} : item1))
+    console.log(selectedItems)
+  }, [ item, setSelectedItems, selectedItems ])
 
   const decreaseQuantityHandleClick = React.useCallback(() => {
     dispatch({ type: 'DECREASE_QUANTITY', payload: item })
-  }, [ item ])
+    setSelectedItems(selectedItems.map(item1 => item1.id === item.id ? {...item, quantity: item.quantity != 1 ? item.quantity - 1 : item.quantity} : item1))
+  }, [ item, setSelectedItems, selectedItems ])
 
   const deleteItem = React.useCallback(() => {
     dispatch({ type: 'DELETE_ITEM', payload: item })
-  }, [ item ])
-
-
-  const onQuantity = React.useCallback((item: Item) => {
-    if (selectedItems.find(item1 => item1.id === item.id) === undefined) {
-      setSelectedItems([...selectedItems, item])
-    }
-  }, [ setSelectedItems, selectedItems ])
+    setSelectedItems(selectedItems?.filter(item1 => item1.id !== item.id))
+    console.log(selectedItems)
+  }, [ item, selectedItems, setSelectedItems ])
 
   const handleChange = React.useCallback((checked: boolean, item: Item) => {
     if (!checked) {
@@ -42,14 +39,14 @@ export default function CartItem({ item, selectedItems, setSelectedItems, isOnly
     } else {
       setSelectedItems([...selectedItems, item])
     }
-  }, [ setSelectedItems, selectedItems ])
+  }, [ setSelectedItems, selectedItems, item ])
 
   return (
     <div className={styles.itemBlock}>
       {!isOnlyItem && (
         <CheckBoxItem
           item={item}
-          checked={!!selectedItems.find(item1 => item1.id == item.id)}
+          checked={!!selectedItems.find(item1 => item1.id === item.id)}
           onChange={handleChange}
         />
       )}

@@ -12,10 +12,16 @@ export interface Props {
   height: number,
   maxLength: number,
   onChange(length: number): void,
+  value: string
 }
 
 // React.forwardRef(function Input2({ meta, input, width, height, maxLength, label }: Props, ref) {
-const Input2 = React.forwardRef(function Input2({ meta, input, label, width, height, maxLength, onChange }: Props, ref) {
+const Input2 = React.forwardRef(function Input2({ meta, input, label, width, height, maxLength, onChange, value }: Props, ref) {
+  React.useEffect(() => {
+    console.log(value)
+  })
+
+
   return (
     <Field meta={meta} input={input} label={label}>
       <Space direction="horizontal">
@@ -24,7 +30,7 @@ const Input2 = React.forwardRef(function Input2({ meta, input, label, width, hei
             style={{width: `${width}px`, height: `${height}px`}}
             iconRender={(visible) => (visible ? <EyeTwoTone /> :
             <EyeInvisibleOutlined />)} /> :
-          <Input {...input} ref={ref} maxLength={maxLength} style={{width: `${width}px`, height: `${height}px`}} />}
+          <Input {...input} ref={ref} value={value} maxLength={maxLength} style={{width: `${width}px`, height: `${height}px`}} />}
       </Space>
     </Field>
   )

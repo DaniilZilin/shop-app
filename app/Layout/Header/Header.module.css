@@ -1,5 +1,4 @@
 .root {
-  background-color: white;
   float: right;
   text-align: right;
   position: relative;
@@ -17,38 +16,6 @@
   transform: scale(1);
 }
 
-.itemsModal {
-  background-color: white;
-  height: 250px;
-  width: 300px;
-  border: 2px solid red;
-  right: 0;
-  position: absolute;
-  /*transition: 0.1s all;*/
-  /*transform: scale(0) ;*/
-  /*transform-origin: 100% 0%;*/
-}
-
-/*.root:hover > .itemsModal {*/
-/*  transform: scale(1);*/
-/*}*/
-
-.itemsModal.add {
-  display: block;
-}
-
-.itemName {
-  height: 50px;
-  width: 250px;
-  color: red;
-  margin-left: 10px;
-}
-
-.itemContainer {
-  display: flex;
-  padding-bottom: 25px;
-}
-
 .goToCartButton {
   background-color: red;
   border-radius: 10px;
@@ -56,10 +23,6 @@
   text-align: center;
   font-size: 24px;
   cursor: pointer;
-}
-
-.container {
-  overflow-y: auto;
 }
 
 .headerList {

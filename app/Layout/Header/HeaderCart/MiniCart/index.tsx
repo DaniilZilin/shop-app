@@ -1,36 +1,27 @@
 import React from 'react'
 
-import styles from '../../Header.module.css'
-import {Item} from '../../../../types'
-import Image from 'next/image'
-import {useDispatch} from "react-redux";
-import Link from "next/link";
+import styles from './MiniCart.module.css'
+import { Item } from '../../../../types'
+import Link from 'next/link'
+import MiniCartItem from './MiniCartItem'
 
 export interface Props {
   cartItems: any[];
 }
 
-export default function MiniCart({cartItems}: Props) {
-  const dispatch = useDispatch()
-
-  const removeItem = (item: Item) => {
-    dispatch({type: 'DELETE_ITEM', payload: item})
-  }
-
+export default function MiniCart({ cartItems }: Props) {
   return (
-    <div className={styles.itemsModal}>
-      <div className={styles.container}>
-        {cartItems.map((item: Item) => (
-          <div className={styles.itemContainer}>
-            <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="50" height="50"
-                   alt=""/>
-            <div className={styles.itemName}>{item.name}</div>
-            <Image onClick={() => removeItem(item)} src={`/img/garbage.png`} width="20" height="20" alt=""/>
-          </div>
+    <div className={styles.root}>
+      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+        <div>Основные предметы: </div>
+        <div>Очистить список</div>
+      </div>
+      <div className={styles.cartItemsContainer}>
+        {cartItems?.map((item: Item) => (
+          <MiniCartItem item={item} />
         ))}
       </div>
-      <Link className={styles.goToCartButton} href='/cart'>В корзину</Link>
-
+      <Link className={styles.goToCartButton} href='/order'>В корзину</Link>
     </div>
   )
 }

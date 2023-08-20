@@ -3,7 +3,7 @@ const expirationDate = (value: string) => {
     return value
   }
 
-  const expirationDate = value.replace(/[^\d]/g, '')
+  const expirationDate = value.replace(/^\d/g, '')
 
   if (value.length < 3) {
     return `${expirationDate.slice(0,2)}`

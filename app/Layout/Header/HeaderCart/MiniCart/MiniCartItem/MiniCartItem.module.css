@@ -1,0 +1,27 @@
+.root {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.itemPhoto {
+
+}
+
+.fullNameBlock {
+  display: flex;
+  margin-left: 10px;
+}
+
+.cartItemAmount {
+  position: absolute;
+  border-radius: 50%;
+  background-color: white;
+  font-weight: 700;
+}
+
+.cartItemName {
+  width: 300px;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: right;
+}

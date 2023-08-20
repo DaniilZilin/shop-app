@@ -16,7 +16,7 @@ export default function Cart() {
 
   React.useEffect(() => {
     setSelectedItems(cartItems)
-  }, [isLoaded])
+  }, [ isLoaded ])
 
   const isEverythingSelected = React.useMemo(() => {
     return selectedItems.length === cartItems.length
@@ -32,17 +32,16 @@ export default function Cart() {
 
   const deleteItems = React.useCallback(() => {
     dispatch({ type: 'DELETE_ITEMS', payload: selectedItems.map(item => item.id) })
-  }, [ selectedItems ])
+    setSelectedItems([])
+  }, [ selectedItems, setSelectedItems ])
 
-  React.useEffect(() => {
-    setSelectedItems(cartItems)
-  }, [ setSelectedItems, cartItems ])
+  // React.useEffect(() => {
+  //   setSelectedItems(cartItems)
+  // }, [ setSelectedItems, cartItems ])
 
   const totalCartName = React.useMemo(() => {
     const totalAmount: string = String(selectedItems.reduce((accumulator, item) => accumulator + item.quantity, 0))
-    console.log(totalAmount.slice(-2))
     if (totalAmount.slice(-1) === '1' && totalAmount.slice(-2) !== '11') {
-      // заканчивается на 1 но не на 11
       return 'товар'
     } else if ((totalAmount.slice(-1) === '2' || totalAmount.slice(-1) === '3' || totalAmount.slice(-1) === '4' &&
       totalAmount.slice(-2) !== '12' && totalAmount.slice(-2) !== '13' && totalAmount.slice(-2) !== '14')) {
