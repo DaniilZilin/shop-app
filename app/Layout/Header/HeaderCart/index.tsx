@@ -1,5 +1,4 @@
 import React from 'react'
-import classNames from 'classnames'
 
 import styles from '../Header.module.css'
 import { useTypesSelector } from '../../../hooks/useTypedSelector'
@@ -43,7 +42,14 @@ export default function HeaderCart({ shouldDisplayMiniCart, setShouldDisplayMini
   const total = React.useMemo(() => ([
     {
       key: '',
-      icon: React.createElement(CartIcon, { amountOfItems: `${cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0)}`, label: `${cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)} ₽`}),
+      // icon: React.createElement(CartIcon, {
+      //   amountOfItems: cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0),
+      //   label: `${cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)} ₽`
+      // }),
+      icon: <CartIcon
+        amountOfItems={cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0)}
+        label={`${cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)} ₽`}
+      />
     }]), [cartItems])
 
   const handleMouseOver = React.useCallback(() => {

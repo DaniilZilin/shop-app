@@ -32,7 +32,7 @@ export default function Field({ meta, input, label, children }: Props) {
     if (input.name === "cardNumber") {
       getCardType(input.value)
     }
-  })
+  }, [input.value])
 
   const hasError = meta.error && meta.submitFailed
 

@@ -2,7 +2,7 @@ import React from 'react'
 import Field from '../Field'
 
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-import { Space, Input } from 'antd'
+import { Space, Input as BaseInput } from 'antd'
 
 export interface Props {
   meta: any,
@@ -16,24 +16,19 @@ export interface Props {
 }
 
 // React.forwardRef(function Input2({ meta, input, width, height, maxLength, label }: Props, ref) {
-const Input2 = React.forwardRef(function Input2({ meta, input, label, width, height, maxLength, onChange, value }: Props, ref) {
-  React.useEffect(() => {
-    console.log(value)
-  })
-
-
+const Input = React.forwardRef(function Input({ meta, input, label, width, height, maxLength, onChange, value }: Props, ref) {
   return (
     <Field meta={meta} input={input} label={label}>
       <Space direction="horizontal">
         {input.name === 'code' ?
-          <Input.Password {...input} ref={ref} maxLength={maxLength}
+          <BaseInput.Password {...input} ref={ref} maxLength={maxLength}
             style={{width: `${width}px`, height: `${height}px`}}
             iconRender={(visible) => (visible ? <EyeTwoTone /> :
             <EyeInvisibleOutlined />)} /> :
-          <Input {...input} ref={ref} value={value} maxLength={maxLength} style={{width: `${width}px`, height: `${height}px`}} />}
+          <BaseInput {...input} ref={ref} value={value} maxLength={maxLength} style={{width: `${width}px`, height: `${height}px`}} />}
       </Space>
     </Field>
   )
 })
 
-export default Input2
+export default Input

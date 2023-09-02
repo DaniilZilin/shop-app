@@ -27,14 +27,6 @@
   height: 5px;
 }
 
-.total:hover {
-  color: red;
-}
-
 .cartIcon {
   margin-top: 10px;
-}
-
-.cartIcon:hover {
-  color: red;
 }

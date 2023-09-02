@@ -22,10 +22,6 @@ export default function UserForm({ setUserId }: Props) {
 
   const [ firstNameState, setFirstNameState ] = React.useState('')
 
-  React.useEffect(() => {
-    console.log(firstNameState)
-    setFirstNameState(firstName.current.input.value)
-  })
 
   return (
     <MainLayout>
@@ -40,16 +36,6 @@ export default function UserForm({ setUserId }: Props) {
             <Field name="email" label="E-mail" component={Input} validate={email} width={250} />
             <Field name="phoneNumber" label="Телефон" component={PhoneNumber} validate={phone} width={250} />
             <Field name="firstName" ref={firstName} label="Имя" component={Input} validate={name} width={250} value={firstNameState} />
-            <OnBlur name="firstName">
-              {() => (
-                setFirstNameState(firstNameState.toUpperCase())
-              )}
-            </OnBlur>
-            <OnChange name="firstName">
-              {(value, previous) => {
-
-              }}
-            </OnChange>
             <Field name="lastName" ref={lastName} label="Фамилия" component={Input} validate={name} width={250} />
             <Button type="primary" htmlType="submit" disabled={submitting} className={styles.submitButton}>Отправить</Button>
           </form>

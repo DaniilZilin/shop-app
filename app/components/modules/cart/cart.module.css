@@ -79,7 +79,8 @@
   height: 50px;
   border-radius: 10px;
   background-color: blue;
-  cursor: pointer;
+  color: white;
+  text-decoration: #ebccd1;
 }
 
 .continueButtonText {
