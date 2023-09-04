@@ -1,5 +1,5 @@
 import React from 'react'
-import {Item} from '../../../types'
+import { Item } from '../../../types'
 import Image from 'next/image'
 import useSWR from 'swr'
 import { Rate } from 'antd'
@@ -27,12 +27,11 @@ export default function ItemsList({ items }: Props) {
   //   setQueryParams(queryString)
   // }, [])
 
-  const totalSum = cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)
-  console.log(cartItems)
+  let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
+
 
   return (
     <div>
-      <div>Общая стоимость {totalSum}₽</div>
       {data?.map((item: Item) => (
         <div className={styles.itemBox}>
           <div className={styles.imageBox}>
@@ -50,7 +49,7 @@ export default function ItemsList({ items }: Props) {
             </div>
           </div>
           <div className={styles.priceBox}>
-            <div>{item.price + `₽`}</div>
+            <div>{ruble.format(item.price)}</div>
             <AddToCartButton item={item}/>
           </div>
         </div>

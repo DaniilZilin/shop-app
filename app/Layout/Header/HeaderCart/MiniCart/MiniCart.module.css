@@ -7,52 +7,39 @@
   right: 0px;
 }
 
-.cartItemsContainer {
-}
-
-.cartItem {
+.topHeader {
+  height: 25px;
+  margin-bottom: 25px;
   display: flex;
-  padding: 10px;
+  justify-content: space-between;
 }
 
-.cartItemAmount {
-  border-radius: 10px;
-  background-color: grey;
-  color: white;
+.clearListButton {
+  display: inline;
+  cursor: pointer;
 }
 
-.itemsModal {
-  background-color: white;
-  height: 250px;
-  width: 300px;
-  border: 2px solid red;
-  right: 0;
-  position: absolute;
+.clearListButton:hover {
+  color: blue;
 }
 
-.container {
-  overflow-y: auto;
-}
-
-.itemsModal.add {
-  display: block;
-}
-
-.itemContainer {
+.bottomContainer {
   display: flex;
-  padding-bottom: 25px;
+  justify-content: space-between;
 }
 
-.cartItemName {
-  height: 50px;
-  width: 250px;
-  margin-left: 10px;
+.total {
+  display: inline;
+}
+
+.totalSum {
+
 }
 
 .goToCartButton {
-  width: 200px;
-  height: 100px;
+  width: 150px;
+  height: 50px;
   background-color: blue;
   color: white;
-  text-decoration: none;
+  border-radius: 8px;
 }

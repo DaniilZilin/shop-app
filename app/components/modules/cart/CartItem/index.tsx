@@ -41,6 +41,8 @@ export default function CartItem({ item, selectedItems, setSelectedItems, isOnly
     }
   }, [ setSelectedItems, selectedItems, item ])
 
+  let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
+
   return (
     <div className={styles.itemBlock}>
       {!isOnlyItem && (
@@ -64,11 +66,11 @@ export default function CartItem({ item, selectedItems, setSelectedItems, isOnly
           <div className={styles.minusCounter} onClick={decreaseQuantityHandleClick}>-</div>
         </div>
         <div>
-          {item.quantity > 1 && (<div>{item.price + `₽`} / шт.</div>)}
+          {item.quantity > 1 && (<div>{ruble.format(item.price)} / шт.</div>)}
         </div>
       </div>
       <div className={styles.priceBlock}>
-        <div style={{fontSize: '20px'}}>{item.price * item.quantity}₽</div>
+        <div style={{fontSize: '20px'}}>{ruble.format(item.price * item.quantity)}</div>
       </div>
     </div>
   )

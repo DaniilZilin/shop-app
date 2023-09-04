@@ -17,18 +17,28 @@ export default function MiniCart({ cartItems }: Props) {
   }, [ cartItems ])
   console.log(cartItems)
 
+  if (cartItems.length === 0) return null
+
+  let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
+
   return (
     <div className={styles.root}>
-      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <div>Основные предметы: </div>
-        <div onClick={deleteItems}>Очистить список</div>
+      <div className={styles.topHeader}>
+        <div>Основные предметы:</div>
+        <div className={styles.clearListButton} onClick={deleteItems}>Очистить список</div>
       </div>
       <div className={styles.cartItemsContainer}>
         {cartItems?.map((item: Item) => (
           <MiniCartItem item={item} />
         ))}
       </div>
-      <Link className={styles.goToCartButton} href='/order'>В корзину</Link>
+      <div className={styles.bottomContainer}>
+        <div>
+          <div className={styles.total}>Итого:</div>
+          <div className={styles.totalSum}>{`${ruble.format(cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0))}`}</div>
+        </div>
+        <Link className={styles.goToCartButton} href='/cart'>В корзину</Link>
+      </div>
     </div>
   )
 }

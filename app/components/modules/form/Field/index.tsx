@@ -1,5 +1,4 @@
 import React from 'react'
-import classNames from 'classnames'
 
 import styles from './Field.module.css'
 import Image from 'next/image'
@@ -28,20 +27,20 @@ export default function Field({ meta, input, label, children }: Props) {
     }
   }, [ imageName, setImageName])
 
-  React.useEffect(() => {
-    if (input.name === "cardNumber") {
-      getCardType(input.value)
-    }
-  }, [input.value])
+  // React.useEffect(() => {
+  //   if (input.name === "cardNumber") {
+  //     getCardType(input.value)
+  //   }
+  // }, [input.value])
 
-  const hasError = meta.error && meta.submitFailed
+  // const hasError = meta.error && meta.submitFailed
 
   return (
     // <div className={classNames(styles.formGroup, { [styles.active]: hasError})}>
     <div>
       <div>{label}</div>
        {children}
-      <p>{hasError ? meta.error : null}</p>
+      {/*<p>{hasError ? meta.error : null}</p>*/}
         {imageName && (
         <div>
           <Image src={`/img/card_type_images/logo-${imageName}.svg`} width="40" height="40" alt="" className={styles.logoStyles} />

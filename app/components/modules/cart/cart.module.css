@@ -78,7 +78,7 @@
 .continueButton {
   height: 50px;
   border-radius: 10px;
-  background-color: blue;
+  /*background-color: blue;*/
   color: white;
   text-decoration: #ebccd1;
 }

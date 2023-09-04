@@ -35,22 +35,19 @@ export default function Cart() {
     setSelectedItems([])
   }, [ selectedItems, setSelectedItems ])
 
-  // React.useEffect(() => {
-  //   setSelectedItems(cartItems)
-  // }, [ setSelectedItems, cartItems ])
-
   const totalCartName = React.useMemo(() => {
     const totalAmount: string = String(selectedItems.reduce((accumulator, item) => accumulator + item.quantity, 0))
     if (totalAmount.slice(-1) === '1' && totalAmount.slice(-2) !== '11') {
       return 'товар'
     } else if ((totalAmount.slice(-1) === '2' || totalAmount.slice(-1) === '3' || totalAmount.slice(-1) === '4' &&
       totalAmount.slice(-2) !== '12' && totalAmount.slice(-2) !== '13' && totalAmount.slice(-2) !== '14')) {
-      // заканчивается 2,3,4 но не 12, 13, 14
       return 'товара'
     } else {
       return 'товаров'
     }
   }, [ selectedItems ])
+
+  let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB'})
 
   if (!cartItems.length) {
     return (
@@ -93,7 +90,7 @@ export default function Cart() {
                     <div style={{fontSize: '12px', color: '#8c8c8c'}}>Итого</div>
                     <div>{selectedItems.reduce((accumulator, item) => accumulator + item.quantity, 0)} {totalCartName}</div>
                   </div>
-                  <div>{selectedItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}₽</div>
+                  <div>{ruble.format(selectedItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0))}</div>
                 </div>
               </div>
               <Link className={styles.continueButton} href='/order'>Перейти к оформлению</Link>

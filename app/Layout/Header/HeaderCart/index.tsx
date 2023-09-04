@@ -48,7 +48,7 @@ export default function HeaderCart({ shouldDisplayMiniCart, setShouldDisplayMini
       // }),
       icon: <CartIcon
         amountOfItems={cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0)}
-        label={`${cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)} ₽`}
+        label={`${cartItems.reduce((accumulator, item) => accumulator + item.quantity * item.price, 0)}`}
       />
     }]), [cartItems])
 

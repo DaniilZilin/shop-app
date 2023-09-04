@@ -5,8 +5,9 @@ import InputMask from 'react-input-mask'
 import { Input, Space } from 'antd'
 
 export interface Props {
-  meta: any,
-  input: any,
+  name: string
+  meta?: any,
+  input?: any,
   label: string,
   width: number,
   height: number,
@@ -14,7 +15,7 @@ export interface Props {
 }
 
 
-export default function PhoneNumber({ meta, input, label, width, height }: Props) {
+export default function PhoneNumber({ meta, input, label, width, height, name }: Props) {
   return (
     <Field meta={meta} input={input} label={label}>
       <Space direction="horizontal">
