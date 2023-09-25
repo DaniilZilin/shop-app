@@ -1,5 +1,5 @@
 const emailRegEx = new RegExp('^.+@.+$')
 
-const email = (value: string) => (emailRegEx.test(value) ? undefined : 'Неверный адрес электронной почты')
+const email = (value: string) => (emailRegEx.test(value))
 
 export default email

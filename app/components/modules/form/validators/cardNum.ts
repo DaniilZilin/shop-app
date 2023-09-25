@@ -1,3 +1,3 @@
-// const cardNum = (value: string) => ()
-//
-// export default cardNum
+const cardNum = (value: string) => (value ? undefined : '123')
+
+export default cardNum

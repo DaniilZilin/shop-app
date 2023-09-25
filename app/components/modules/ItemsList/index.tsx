@@ -27,6 +27,7 @@ export default function ItemsList({ items }: Props) {
   //   setQueryParams(queryString)
   // }, [])
 
+  // const params = new URLSearchParams(window.location.pathname)
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
 
 

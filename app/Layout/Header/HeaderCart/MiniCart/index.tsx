@@ -15,9 +15,9 @@ export default function MiniCart({ cartItems }: Props) {
   const deleteItems = React.useCallback(() => {
     dispatch({ type: 'DELETE_ITEMS', payload: cartItems.map(item => item.id) })
   }, [ cartItems ])
-  console.log(cartItems)
 
   if (cartItems.length === 0) return null
+  // if (cartItems.length === 0 || window.location.pathname === '/order' || window.location.pathname === '/cart') return null
 
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
 

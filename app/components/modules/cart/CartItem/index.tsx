@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import styles from '../cart.module.css'
 import CheckBoxItem from '../CheckBoxItem'
 import Image from 'next/image'
@@ -15,22 +15,27 @@ export interface Props {
 
 export default function CartItem({ item, selectedItems, setSelectedItems, isOnlyItem }: Props) {
   const dispatch = useDispatch()
+  const [ itemQuantity, setItemQuantity ] = React.useState<number>(item.quantity)
+
+  React.useEffect(() => {
+    console.log(itemQuantity)
+  })
 
   const increaseQuantityHandleClick = React.useCallback(() => {
     dispatch({ type: 'INCREASE_QUANTITY', payload: item })
     setSelectedItems(selectedItems.map(item1 => item1.id === item.id ? {...item, quantity: item.quantity + 1} : item1))
-    console.log(selectedItems)
-  }, [ item, setSelectedItems, selectedItems ])
+    setItemQuantity(itemQuantity + 1)
+  }, [ item, setSelectedItems, selectedItems, itemQuantity, setItemQuantity ])
 
   const decreaseQuantityHandleClick = React.useCallback(() => {
     dispatch({ type: 'DECREASE_QUANTITY', payload: item })
     setSelectedItems(selectedItems.map(item1 => item1.id === item.id ? {...item, quantity: item.quantity != 1 ? item.quantity - 1 : item.quantity} : item1))
-  }, [ item, setSelectedItems, selectedItems ])
+    setItemQuantity(item.quantity != 1 ? item.quantity - 1 : item.quantity)
+  }, [ item, setSelectedItems, selectedItems, setItemQuantity, itemQuantity ])
 
   const deleteItem = React.useCallback(() => {
     dispatch({ type: 'DELETE_ITEM', payload: item })
     setSelectedItems(selectedItems?.filter(item1 => item1.id !== item.id))
-    console.log(selectedItems)
   }, [ item, selectedItems, setSelectedItems ])
 
   const handleChange = React.useCallback((checked: boolean, item: Item) => {
@@ -40,6 +45,22 @@ export default function CartItem({ item, selectedItems, setSelectedItems, isOnly
       setSelectedItems([...selectedItems, item])
     }
   }, [ setSelectedItems, selectedItems, item ])
+
+  const handleChangeCount = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setItemQuantity(Number(e.target.value))
+  }, [ setItemQuantity ])
+
+  const handleBlur = React.useCallback(() => {
+    if (itemQuantity <= 1) {
+      dispatch({ type: 'CHANGE_QUANTITY', payload: {...item, quantity: 1} })
+      setSelectedItems(selectedItems.map(item1 => item1.id === item.id ? {...item, quantity: 1 } : item1))
+      setItemQuantity(1)
+    } else {
+      dispatch({ type: 'CHANGE_QUANTITY', payload: {...item, quantity: itemQuantity} })
+      setSelectedItems(selectedItems.map(item1 => item1.id === item.id ? {...item, quantity: itemQuantity } : item1))
+      setItemQuantity(itemQuantity)
+    }
+  }, [ item, setSelectedItems, selectedItems, setItemQuantity, itemQuantity ])
 
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
 
@@ -62,7 +83,8 @@ export default function CartItem({ item, selectedItems, setSelectedItems, isOnly
       <div className={styles.itemQuantityBlock}>
         <div className={styles.quantityCounter}>
           <div className={styles.plusCounter} onClick={increaseQuantityHandleClick}>+</div>
-          <div className={styles.quantityCounter2}>{item.quantity}</div>
+          <input onBlur={handleBlur} onChange={handleChangeCount} value={itemQuantity} style={{ width: 30 }} />
+          <div>{item.quantity}</div>
           <div className={styles.minusCounter} onClick={decreaseQuantityHandleClick}>-</div>
         </div>
         <div>

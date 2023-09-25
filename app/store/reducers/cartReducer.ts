@@ -23,8 +23,10 @@ export const cartReducer = (state = initialState, action: UserAction): CartState
       return { ...state, cartItems: state.cartItems.filter((item) => item.id !== action.payload.id)}
 
     case UserActionTypes.DELETE_ITEMS:
-
       return { ...state, cartItems: state.cartItems.filter(item => !action.payload.includes(item.id)) }
+
+    case UserActionTypes.CHANGE_QUANTITY:
+      return { ...state, cartItems: state.cartItems.map(item => item.id === action.payload.id ? {...item, quantity: action.payload.quantity } : item )}
 
     default:
       return { ...state}

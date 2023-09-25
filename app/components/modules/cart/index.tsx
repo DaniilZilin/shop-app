@@ -28,26 +28,36 @@ export default function Cart() {
     } else {
       setSelectedItems(cartItems)
     }
-  }, [setSelectedItems, cartItems])
+  }, [ setSelectedItems, cartItems ])
 
   const deleteItems = React.useCallback(() => {
     dispatch({ type: 'DELETE_ITEMS', payload: selectedItems.map(item => item.id) })
     setSelectedItems([])
   }, [ selectedItems, setSelectedItems ])
 
+  React.useEffect(() => {
+    if (!!selectedItems && cartItems.length === 1) {
+      setSelectedItems(cartItems)
+    }
+  }, [ setSelectedItems, cartItems, selectedItems ])
+
+  React.useEffect(() => {
+
+  }, [])
+
   const totalCartName = React.useMemo(() => {
     const totalAmount: string = String(selectedItems.reduce((accumulator, item) => accumulator + item.quantity, 0))
     if (totalAmount.slice(-1) === '1' && totalAmount.slice(-2) !== '11') {
       return 'товар'
-    } else if ((totalAmount.slice(-1) === '2' || totalAmount.slice(-1) === '3' || totalAmount.slice(-1) === '4' &&
-      totalAmount.slice(-2) !== '12' && totalAmount.slice(-2) !== '13' && totalAmount.slice(-2) !== '14')) {
+    } else if (((totalAmount.slice(-1) === '2' || totalAmount.slice(-1) === '3' || totalAmount.slice(-1) === '4') &&
+        (totalAmount.slice(-2) !== '12' && totalAmount.slice(-2) !== '13' && totalAmount.slice(-2) !== '14'))) {
       return 'товара'
     } else {
       return 'товаров'
     }
   }, [ selectedItems ])
 
-  let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB'})
+  let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
 
   if (!cartItems.length) {
     return (
@@ -75,8 +85,8 @@ export default function Cart() {
           </div>
         )}
         <div className={styles.itemsBlock}>
-          {cartItems?.map((item: Item) => (
-            <CartItem item={item} selectedItems={selectedItems} setSelectedItems={setSelectedItems} isOnlyItem={cartItems.length === 1}/>
+          {cartItems?.map((item: Item, i) => (
+            <CartItem key={i} item={item} selectedItems={selectedItems} setSelectedItems={setSelectedItems} isOnlyItem={cartItems.length === 1}/>
           ))}
         </div>
       </div>

@@ -1,30 +1,32 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import Field from '../Field'
 import InputMask from 'react-input-mask'
+import { Space, Input } from 'antd'
 
-import { Input, Space } from 'antd'
+
 
 export interface Props {
-  name: string
-  meta?: any,
-  input?: any,
-  label: string,
-  width: number,
-  height: number,
-  maxLength: number,
+  // name: string;
+  // label: string;
+  // width: number;
+  // height: number;
+  // onChange(value: any): void;
+  // error: string | null,
 }
 
+export default function PhoneNumber() {
+// const PhoneNumber = React.forwardRef(function PhoneNumber({ label, onChange, width, height, error }: Props, ref) {
+//   const handleChange = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
+//     onChange(e.target.value)
+//   }, [ onChange ])
 
-export default function PhoneNumber({ meta, input, label, width, height, name }: Props) {
   return (
-    <Field meta={meta} input={input} label={label}>
-      <Space direction="horizontal">
-        <InputMask {...input} mask='+7 (999) 999-99-99' maskPlaceholder='+7 (___)-   -  -'>
-          {() => (
-            <Input style={{width: `${width}px`, height: `${height}px`}} />
-          )}
-        </InputMask>
-      </Space>
-    </Field>
+    // <Field label={label} error={error}>
+      <InputMask >
+        <Input />
+      </InputMask>
+    // </Field>
   )
 }
+
+// export default PhoneNumber
