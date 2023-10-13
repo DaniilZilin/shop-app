@@ -4,12 +4,12 @@ import Image from 'next/image'
 import useSWR from 'swr'
 import { Rate } from 'antd'
 
-
 import styles from './ItemsList.module.css'
 import fetcher from '../../../utils/fetcher'
-import { useDispatch } from 'react-redux'
-import { useTypesSelector } from '../../../hooks/useTypedSelector'
 import AddToCartButton from './AddToCartButton'
+import Link from 'next/link'
+
+import { useSearchParams } from 'next/navigation'
 
 export interface Props {
   items: Item[]
@@ -17,8 +17,7 @@ export interface Props {
 
 export default function ItemsList({ items }: Props) {
   const [ queryParams, setQueryParams ] = React.useState<boolean>(true)
-  const { data } = useSWR(queryParams ? `/api/v1/items_list/list/` : null, fetcher)
-  const { cartItems } = useTypesSelector(state => state.user)
+  const { data } = useSWR(queryParams ? `/api/v1/items_list/list?` : null, fetcher)
 
   // const priceFilter = React.useCallback((values: Record<string, any>) => {
   //   console.log(values)
@@ -30,10 +29,11 @@ export default function ItemsList({ items }: Props) {
   // const params = new URLSearchParams(window.location.pathname)
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
 
-
   return (
+  <>
+    <Link href="?order=2">123</Link>
     <div>
-      {data?.map((item: Item) => (
+      {items?.map((item: Item) => (
         <div className={styles.itemBox}>
           <div className={styles.imageBox}>
             <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="150" height="150"
@@ -56,6 +56,7 @@ export default function ItemsList({ items }: Props) {
         </div>
       ))}
     </div>
+        </>
   )
 }
 

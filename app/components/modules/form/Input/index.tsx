@@ -5,15 +5,15 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import { Space, Input as BaseInput } from 'antd'
 
 export interface Props {
-  name?: string;
-  label?: any;
+  name: string;
+  label: string;
   width?: number;
   height?: number;
   maxLength?: number;
-  value?: string,
-  error: string | null,
-  onChange(value: any): void,
-  onBlur(): void,
+  value?: any,
+  error?: any,
+  onChange(value: string): void,
+  onBlur?(): void,
 }
 
 // React.forwardRef(function Input2({ meta, input, width, height, maxLength, label }: Props, ref) {
@@ -26,7 +26,7 @@ const Input = React.forwardRef(function Input({ onChange, onBlur, label, width, 
     <Field label={label} error={error}>
       <Space direction="horizontal">
         {name === "code" ? (
-          <BaseInput.Password ref={ref} pattern='/\d/g' maxLength={maxLength} style={{ width: `${width}px`, height: `${height}px` }}
+          <BaseInput.Password ref={ref} onBlur={onBlur} onChange={handleChange} value={value} maxLength={maxLength} style={{ width: `${width}px`, height: `${height}px` }}
             iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
             )
             :

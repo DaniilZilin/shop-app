@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Item } from '../../../../app/types'
 
-
 const ITEM_LIST: Item[] = [
     {
       id: 1,

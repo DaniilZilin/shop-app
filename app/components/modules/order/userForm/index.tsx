@@ -65,12 +65,6 @@ export default function UserForm({ setUserId }: Props) {
     console.log(email)
     console.log(isValid)
 
-    // if (phoneNumber < 20) {
-    //   setPhoneNumberError('Must be a valid phone number"')
-    //   isValid = false
-    // } else {
-    //   setPhoneNumberError(null)
-    // }
     return isValid
   }, [ setFirstNameError, setEmailError, setLastNameError, setPhoneNumberError, phoneNumber, lastName, email, firstName ])
 
