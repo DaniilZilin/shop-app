@@ -1,40 +1,36 @@
 import React from 'react'
 import { Item } from '../../../types'
 import Image from 'next/image'
-import useSWR from 'swr'
 import { Rate } from 'antd'
 
 import styles from './ItemsList.module.css'
-import fetcher from '../../../utils/fetcher'
 import AddToCartButton from './AddToCartButton'
-import Link from 'next/link'
-
-import { useSearchParams } from 'next/navigation'
+import SortingDropdown from '../../../Layout/Content/SortingDropdown'
 
 export interface Props {
   items: Item[]
 }
 
-export default function ItemsList({ items }: Props) {
-  const [ queryParams, setQueryParams ] = React.useState<boolean>(true)
-  const { data } = useSWR(queryParams ? `/api/v1/items_list/list?` : null, fetcher)
+export default function ItemList({ items }: Props) {
+  const [ isVisible, setIsVisible ] = React.useState<boolean>(false)
+  const [ currentSortingParam, setCurrentSortingParam ] = React.useState("По цене")
 
-  // const priceFilter = React.useCallback((values: Record<string, any>) => {
-  //   console.log(values)
-  //   const queryString = new URLSearchParams(values).toString()
-  //   console.log(queryString)
-  //   setQueryParams(queryString)
-  // }, [])
+  const dropdownMenuRef = React.useRef(null)
 
-  // const params = new URLSearchParams(window.location.pathname)
+  const handleClickDisplayDiv = React.useCallback(() => {
+    setIsVisible(true)
+  }, [ setIsVisible ])
+
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
-
   return (
-  <>
-    <Link href="?order=2">123</Link>
-    <div>
-      {items?.map((item: Item) => (
-        <div className={styles.itemBox}>
+    <>
+      <div onClick={handleClickDisplayDiv}>
+        <div>
+        <div>Сортировать: {currentSortingParam}</div>
+        {isVisible && <SortingDropdown setCurrentSortingParam={setCurrentSortingParam} setIsVisible={setIsVisible} />}
+      </div>
+      {items?.map((item: Item, i) => (
+        <div key={i} className={styles.itemBox}>
           <div className={styles.imageBox}>
             <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="150" height="150"
                    alt=""/>
@@ -55,8 +51,8 @@ export default function ItemsList({ items }: Props) {
           </div>
         </div>
       ))}
-    </div>
-        </>
+      </div>
+    </>
   )
 }
 

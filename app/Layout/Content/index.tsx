@@ -8,7 +8,6 @@ export interface Props {
 }
 
 export default function ContentLayout({ children }: Props) {
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -27,7 +26,7 @@ export default function ContentLayout({ children }: Props) {
           background: colorBgContainer,
         }}
       >
-          {children}
+        {children}
       </Content>
     </Layout>
   )

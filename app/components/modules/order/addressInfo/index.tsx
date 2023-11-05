@@ -1,15 +1,14 @@
 import React from 'react'
-import {webpackInvalidSpans} from "next/dist/build/webpack/plugins/profiling-plugin";
-import Script from "next/script";
+import Script from 'next/script'
 
 const YANDEX_MAP_KEY = '1dca8b5e-1131-414f-b759-3205e3731b70'
 
 export default function Maps() {
-
   const getAddress = React.useCallback(async(coords: [number, number]) => {
     const geoCode = await window.ymaps.geocode(coords)
     // console.log(geoCode.geoObjects.get(0))
     const firstGeoObject = geoCode.geoObjects.get(0)
+    // @ts-ignore
     console.log(firstGeoObject.getAddressLine())
   }, [])
 

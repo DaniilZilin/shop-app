@@ -1,0 +1,25 @@
+.leftInput {
+  text-indent: 20px;
+  margin: 10px;
+  width: 75px;
+}
+
+.leftInputLabel {
+  position: absolute;
+  left: 15px;
+}
+
+.close {
+  display: block;
+  position: absolute;
+  left: 70px;
+  margin-top: 15px;
+  width: 15px;
+  height: 15px;
+  --weight: 3px;
+  --aa: 1px; /* anti-aliasing */
+  --color: red;
+  border-radius: 3px;
+  background: linear-gradient(45deg, transparent calc(50% - var(--weight) - var(--aa)), var(--color) calc(50% - var(--weight)), var(--color) calc(50% + var(--weight)), transparent calc(50% + var(--weight) + var(--aa))),
+  linear-gradient(-45deg, transparent calc(50% - var(--weight) - var(--aa)), var(--color) calc(50% - var(--weight)), var(--color) calc(50% + var(--weight)), transparent calc(50% + var(--weight) + var(--aa)));
+}

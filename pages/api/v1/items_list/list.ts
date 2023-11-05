@@ -38,5 +38,29 @@ const ITEM_LIST: Item[] = [
 ]
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Item[]>) {
-  res.status(200).json(ITEM_LIST)
+  const queryParams = req.query
+  // const priceParam = queryParams.price
+  // if (priceParam && priceParam.includes('-')) {
+  //   const alex = priceParam.indexOf('-')
+  //   const min = Number(priceParam.slice(0, alex))
+  //   const max = Number(priceParam.slice(alex+1,))
+  //   const dolboeb = ITEM_LIST.filter(item => item.price > min && item.price < max)
+  //   res.status(200).json(dolboeb)
+  // }
+  if (queryParams.sort) {
+    if (queryParams.sort === 'name_asc') {
+      const daun = [...ITEM_LIST].sort((a,b) => (
+        a.name > b.name ? 1 : -1
+      ))
+      res.status(200).json(daun)
+    } else if (queryParams.sort === 'name_desc') {
+      const alex = [...ITEM_LIST].sort((a,b) => (
+        a.name > b.name ? -1 : 1
+      ))
+      res.status(200).json(alex)
+    }
+  }
+  // else {
+  //   res.status(200).json(ITEM_LIST)
+  // }
 }

@@ -1,8 +1,9 @@
 import React, { ChangeEvent } from 'react'
+import moment from 'moment'
 
 import { Input } from '../../form'
 import CardType from './CardType'
-import { expirationDateValidator, email as emailValidator } from '../../form/validators'
+import { email as emailValidator } from '../../form/validators'
 
 import { Button } from 'antd'
 import styles from './card.module.css'
@@ -39,6 +40,9 @@ export default function CreditCard({ setValues }: Props) {
     if (!cardNumber) {
       setCardNumberError('Field is empty')
       isValid = false
+    } else if (cardNumber.length < 17) {
+      setCardNumberError('Incorrect card number')
+      isValid = false
     } else {
       setCardNumberError('')
     }
@@ -46,7 +50,7 @@ export default function CreditCard({ setValues }: Props) {
     if (!expirationDate) {
       setExpirationDateError('Field is empty')
       isValid = false
-    } else if (!expirationDateValidator(expirationDate)) {
+    } else if (!(moment(expirationDate, 'MM/YY').isAfter(moment()) && expirationDate.length === 5)) {
       setExpirationDateError('Incorrect expiration date')
       isValid = false
     } else {
@@ -91,8 +95,17 @@ export default function CreditCard({ setValues }: Props) {
   }, [ setValues, emailError, setWasSubmittedOnce, checkValidation ])
 
   const cardNumberChangeHandler = React.useCallback((value: string) => {
-    setCardNumber(value)
-    if (value.length > 16) {
+    const cardNumberRegExp = value.replace(/\D/g, '')
+    if (cardNumberRegExp.length < 5) {
+      setCardNumber(`${cardNumberRegExp.slice(0, 4)}`)
+    } else if (cardNumberRegExp.length < 9) {
+      setCardNumber(`${cardNumberRegExp.slice(0, 4)} ${cardNumberRegExp.slice(4, 8)}`)
+    } else if (cardNumberRegExp.length < 13) {
+      setCardNumber(`${cardNumberRegExp.slice(0, 4)} ${cardNumberRegExp.slice(4, 8)} ${cardNumberRegExp.slice(8, 12)}`)
+    } else {
+      setCardNumber(`${cardNumberRegExp.slice(0, 4)} ${cardNumberRegExp.slice(4, 8)} ${cardNumberRegExp.slice(8, 12)} ${cardNumberRegExp.slice(12, 16)}`)
+    }
+    if (value.length > 18) {
       // @ts-ignore
       expirationDateRef.current.input.focus()
     }

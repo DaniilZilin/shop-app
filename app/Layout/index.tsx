@@ -4,14 +4,16 @@ import HeaderReact from './Header'
 import FooterReact from './Footer'
 import ContentReact from './Content'
 import SliderReact from './Slider'
-import MiniCartContext from "../contexts/MiniCartContext";
+import MiniCartContext from '../contexts/MiniCartContext'
+
+import { Item } from '../types'
 
 export interface Props {
   children: React.ReactNode
+  items: Item[]
 }
 
-
-export default function MainLayout({ children }: Props) {
+export default function MainLayout({ children, items }: Props) {
   const [ shouldDisplayMiniCart, setShouldDisplayMiniCart ] = React.useState(false)
 
   const showMiniCartTemporarily = React.useCallback(() => {
@@ -23,7 +25,7 @@ export default function MainLayout({ children }: Props) {
     <Layout>
       <HeaderReact setShouldDisplayMiniCart={setShouldDisplayMiniCart} shouldDisplayMiniCart={shouldDisplayMiniCart} />
       <Layout>
-        <SliderReact />
+        <SliderReact items={items}/>
         <MiniCartContext.Provider value={showMiniCartTemporarily}>
           <ContentReact children={children} />
         </MiniCartContext.Provider>

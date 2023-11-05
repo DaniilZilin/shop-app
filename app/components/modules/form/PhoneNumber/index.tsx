@@ -3,8 +3,6 @@ import Field from '../Field'
 import InputMask from 'react-input-mask'
 import { Space, Input } from 'antd'
 
-
-
 export interface Props {
   // name: string;
   // label: string;
@@ -22,9 +20,9 @@ export default function PhoneNumber() {
 
   return (
     // <Field label={label} error={error}>
-      <InputMask >
+    //   <InputMask >
         <Input />
-      </InputMask>
+      // </InputMask>
     // </Field>
   )
 }

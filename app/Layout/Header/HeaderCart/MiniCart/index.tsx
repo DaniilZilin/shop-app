@@ -16,10 +16,8 @@ export default function MiniCart({ cartItems }: Props) {
     dispatch({ type: 'DELETE_ITEMS', payload: cartItems.map(item => item.id) })
   }, [ cartItems ])
 
-  if (cartItems.length === 0) return null
-  // if (cartItems.length === 0 || window.location.pathname === '/order' || window.location.pathname === '/cart') return null
-
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
+  if (cartItems.length === 0) return null
 
   return (
     <div className={styles.root}>
@@ -28,8 +26,8 @@ export default function MiniCart({ cartItems }: Props) {
         <div className={styles.clearListButton} onClick={deleteItems}>Очистить список</div>
       </div>
       <div className={styles.cartItemsContainer}>
-        {cartItems?.map((item: Item) => (
-          <MiniCartItem item={item} />
+        {cartItems?.map((item: Item, i) => (
+          <MiniCartItem key={i} item={item} />
         ))}
       </div>
       <div className={styles.bottomContainer}>

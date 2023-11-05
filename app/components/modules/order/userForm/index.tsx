@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react'
 import MainLayout from '../../../../Layout'
 
-import { Input, PhoneNumber } from '../../form'
+import { Input } from '../../form'
 import { email as emailValidator } from '../../form/validators'
 import styles from '../creditCardForm/card.module.css'
 import { Button } from 'antd'
