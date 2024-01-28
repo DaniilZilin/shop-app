@@ -1,2 +1,6 @@
 export * from './Item'
 export * from './User'
+export * from './Sorting'
+export * from './PhotoType'
+export * from './Characteristics'
+export * from './ItemType'

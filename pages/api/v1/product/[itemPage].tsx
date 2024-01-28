@@ -1,10 +1,17 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { Item } from '../../../../app/types'
-
+import type {NextApiRequest, NextApiResponse} from 'next'
+import { Item, ItemType, Types } from '../../../../app/types'
 
 const ITEM_LIST: Item[] = [
     {
       id: 1,
+      characteristics: [
+        {
+          country: 'Russian Federation',
+          grant: '12',
+          type: Types.VideoCard,
+        }
+      ],
+      type: ItemType.VideoCard,
       name: 'Видеокарта Palit GeForce GTX 1660 SUPER GamingPro [NE6166S018J9-1160A-1]',
       specs: 'AM4, 2 x 3 ГГц, L2 - 1 МБ, 2хDDR4-2400 МГц, AMD Radeon R5, TDP 35 Вт',
       description: 'Видеокарта Palit GeForce GTX 1660 SUPER Gaming Pro [NE6166S018J9-1160A-1] представляет собой производительное решение в ' +
@@ -20,7 +27,7 @@ const ITEM_LIST: Item[] = [
       photos: [
         {
           id: 1,
-          photo: 'gtx1660_1.jpg',
+          photo: 'gtx1660_1',
         },
         {
           id: 2,
@@ -41,13 +48,20 @@ const ITEM_LIST: Item[] = [
       ],
       price: 1399,
       rating: 2.5,
-      brand: 'Palit',
+      brand: 'palit',
       order_available: 3,
       quantity: 1,
     },
     {
       id: 2,
       name: 'Процессор AMD A6-9500E OEM',
+      characteristics: [
+        {
+          type: ItemType.VideoCard,
+          year_of_release: 2019,
+          grant: '12'
+        }
+      ],
       specs: 'AM4, 2 x 3 ГГц, L2 - 1 МБ, 2хDDR4-2400 МГц, AMD Radeon R5, TDP 35 Вт',
       description: 'Процессор AMD A6-9500 OEM оборудован сокетом AM4 и рассчитан на установку в домашнюю станцию средней мощности или ' +
         'функциональный компьютер офисного, учебного назначения. Обладая базовой тактовой частотой на уровне 3500 МГц, эта двухъядерная ' +
@@ -69,13 +83,20 @@ const ITEM_LIST: Item[] = [
       ],
       price: 1100,
       rating: 1.5,
-      brand: 'AMD',
+      brand: 'amd',
       order_available: 3,
       quantity: 1,
     },
     {
       id: 3,
       name: 'Клавиатура проводная ZET GAMING Blade [K180]',
+      characteristics: [
+        {
+          country: 'Russia',
+          year_of_release: 2019,
+          grant: '12'
+        }
+      ],
       specs: 'AM4, 2 x 3 ГГц, L2 - 1 МБ, 2хDDR4-2400 МГц, AMD Radeon R5, TDP 35 Вт',
       description: 'Игровая клавиатура ZET GAMING Blade Kailh Black Optical облачена в белый корпус и' +
         ' дополнена радужной подсветкой с 14 режимами. Так что, кроме высокой функциональности и производительности' +
@@ -100,30 +121,11 @@ const ITEM_LIST: Item[] = [
     }
 ]
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Item[]>) {
-  const queryParams = req.query
-  const priceParam = queryParams.price
-  // if (priceParam && priceParam.includes('-')) {
-  //   const alex = priceParam.indexOf('-')
-  //   const min = Number(priceParam.slice(0, alex))
-  //   const max = Number(priceParam.slice(alex+1,))
-  //   const dolboeb = ITEM_LIST.filter(item => item.price > min && item.price < max)
-  //   res.status(200).json(dolboeb)
-  // }
-  if (queryParams.sort) {
-    if (queryParams.sort === 'name') {
-      const daun = [...ITEM_LIST].sort((a,b) => (
-        a.name > b.name ? 1 : -1
-      ))
-      res.status(200).json(daun)
-    } else if (queryParams.sort === '-name') {
-      const alex = [...ITEM_LIST].sort((a,b) => (
-        a.name > b.name ? -1 : 1
-      ))
-      res.status(200).json(alex)
-    }
-  }
-  else {
-    res.status(200).json(ITEM_LIST)
+export default function handler(req: NextApiRequest, res: NextApiResponse<Item>) {
+  const finalList = ITEM_LIST.find(item => item.slug === req.query.itemPage as string)
+  if (finalList) {
+    res.status(200).json(finalList)
+  } else {
+    res.status(404)
   }
 }

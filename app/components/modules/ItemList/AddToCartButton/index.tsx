@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useDispatch } from 'react-redux'
 import MiniCartContext from "../../../../contexts/MiniCartContext";
 
+import style from './AddToCartButton.module.css'
+
 export interface Props {
   item: Item;
 }
@@ -22,8 +24,8 @@ export default function AddToCartButton({ item }: Props) {
   const isInCart = React.useMemo(() => cartItems.find(cartItem => item.id === cartItem.id), [item, cartItems])
 
   if (isInCart) {
-    return <Link href='/cart'>Перейти в корзину</Link>
+    return <Link className={style.addedButton} href='/cart'>Перейти в корзину</Link>
   } else {
-    return <div onClick={handleAddToCartClick}>Добавить в корзину</div>
+    return <div className={style.addedButton} onClick={handleAddToCartClick}>Добавить в корзину</div>
   }
 }

@@ -1,0 +1,23 @@
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+   flex: 0 0 100%;
+   min-width: 0;
+}
+
+.embla__slide img {
+    width: 100%;
+}
+
+.embla_thumbs__slide {
+  flex: 0 0 28%;
+  min-width: 0;
+  padding-left: var(--thumbs-slide-spacing);
+  position: relative;
+}

@@ -1,11 +1,11 @@
 import React from 'react'
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons'
-import type { MenuProps } from 'antd'
 import { Layout, Menu, theme } from 'antd'
 import { Item } from '../../types'
 
-import PriceComponent from "./Price";
+import PriceComponent from './Price'
 
+import styles from './Slider.module.css'
+const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 export interface Props {
@@ -33,18 +33,25 @@ export interface Props {
 //   },
 // );
 
+
+export interface Props {
+  label: React.ReactNode,
+  key: React.Key,
+}
+
+
 export default function SliderReact({ items }: Props) {
   const item_list = [
   {
     key: '',
     label: 'Цена',
-    children: [{label: <PriceComponent items={items} />}]
+    children: [
+      {
+        label: <PriceComponent items={items} />
+      }
+    ]
   },
-  {
-    key: '',
-    label: 'Модели',
-    children: []
-  }]
+]
 
   const {
     token: { colorBgContainer },
@@ -54,12 +61,20 @@ export default function SliderReact({ items }: Props) {
     <Sider width={200} style={{ background: colorBgContainer }}>
       <Menu
         mode="inline"
-        inlineIndent={0}
-        defaultSelectedKeys={['1']}
-        // defaultOpenKeys={['sub1']}
-        style={{ height: '100%', borderRight: 0 }}
-        items={item_list}
-      />
+        inlineIndent={1}
+        // defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        style={{ height: '200px' }}
+        // items={item_list}
+      >
+        <SubMenu
+          key="sub1"
+          title="Цена"
+          // className={"sub-menu-custom"}
+          style={{ maxHeight: 440 }}
+        />
+          <PriceComponent items={items} />
+      </Menu>
     </Sider>
   )
 }

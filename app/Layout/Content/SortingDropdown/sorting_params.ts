@@ -1,29 +1,25 @@
-export interface SORT {
-  id: number,
-  sorting_param: string,
-  route: string
-}
+import { Sorting } from '../../../types'
 
-const SORTING_LIST: SORT[] = [
+const SORTING_LIST: Sorting[] = [
   {
-    id: 1,
-    sorting_param: 'По названию (убывание)',
-    route: 'name_desc'
+    value: 1,
+    label: 'По названию (возрастание)',
+    route: 'name',
   },
   {
-    id: 2,
-    sorting_param: 'По названию (возрастание)',
-    route: 'name_asc'
+    value: 2,
+    label: 'По названию (убывание)',
+    route: '-name',
   },
   {
-    id: 3,
-    sorting_param: 'Недорогие',
-    route: 'price_desc'
+    value: 3,
+    label: 'Недорогие',
+    route: '-price'
   },
   {
-    id: 4,
-    sorting_param: 'Дорогие',
-    route: 'price_asc',
+    value: 4,
+    label: 'Дорогие',
+    route: 'price',
   }
 ]
 

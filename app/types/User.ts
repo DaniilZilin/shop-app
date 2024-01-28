@@ -13,11 +13,6 @@ export interface CartState {
   isLoaded: boolean
 }
 
-interface ADD_TO_CART {
-  type: UserActionTypes.ADD_TO_CART
-  action: any[]
-}
-
 export interface UserAction {
   type: string;
   payload?: any;

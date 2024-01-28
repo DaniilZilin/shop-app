@@ -1,40 +1,53 @@
 import React, { ChangeEvent } from 'react'
 import Router from 'next/router'
 
-import SORTING_LIST from './sorting_params'
-import { SORT } from './sorting_params'
+import { Sorting } from '../../../types'
+import SORTING_LIST from '../../../Layout/Content/SortingDropdown/sorting_params'
 
 import styles from './dropdown.module.css'
 
 export interface Props {
   setCurrentSortingParam(param: string): void;
-  setIsVisible(params: boolean): void
+  setIsVisible(param: boolean): void;
+  currentSortingParam: string;
 }
 
-export default function SortingDropdown({ setCurrentSortingParam, setIsVisible }: Props) {
-  const [ isChecked, setIsChecked ] = React.useState<number>(1)
+export default function SortingDropdown({ setCurrentSortingParam, currentSortingParam, setIsVisible }: Props) {
+  const [ currentActiveInput, setCurrentActiveInput ] = React.useState<number>(4)
 
-  const handleClickRadio = React.useCallback((param: SORT) => {
-    setCurrentSortingParam(param.sorting_param)
-    setIsVisible(false)
-    Router.push({
-      pathname: '/',
-      query: { sort: `${param.route}` }
-    })
-  }, [ setCurrentSortingParam, setIsVisible ])
+  const handleClickRadioInput = React.useCallback((item: Sorting) => {
+    setCurrentActiveInput(item.value)
+    console.log(item)
+    if (item.value !== currentActiveInput) {
+      setCurrentSortingParam(item.label)
+      setIsVisible(false)
+      setCurrentActiveInput(item.value)
+      // handleChangeRadioInput(item.value)
+    }
+  }, [ setIsVisible, setCurrentSortingParam, setCurrentActiveInput ])
 
-  const handleChangeRadioInput = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    console.log(isChecked)
-  }, [ setIsChecked, isChecked ])
+  React.useEffect(() => {
+    console.log(currentActiveInput)
+  })
+
+  const handleChangeRadioInput = React.useCallback((item: number) => {
+    setCurrentActiveInput(item)
+    console.log(currentActiveInput)
+  }, [ setCurrentActiveInput ])
 
   return (
     <div className={styles.root}>
-      {SORTING_LIST.map((item) => (
-        <label key={item.id} onClick={() => handleClickRadio(item)} className={styles.dropdownElement}>
-          <input type="radio" onChange={handleChangeRadioInput} checked={item.id===isChecked} />
-          {item.sorting_param}
+      {SORTING_LIST.map((item, index) => (
+        <label key={index} onClick={() => handleClickRadioInput(item)} className={styles.dropdownElement}>
+          <input type="radio" onChange={() => handleChangeRadioInput} checked={item.value===currentActiveInput} value={item.label} />
+          {item.label}
         </label>
       ))}
     </div>
   )
 }
+
+      // <label className={styles.filterLabel}>
+      //   <input type="radio" {...input} checked={input.value===option.value} value={option.value} className={styles.CheckboxMargin}/>
+      //   {option.label}
+      // </label>
