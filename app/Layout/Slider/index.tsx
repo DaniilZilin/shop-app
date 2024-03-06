@@ -40,14 +40,14 @@ export interface Props {
 }
 
 
-export default function SliderReact({ items }: Props) {
+export default function SliderReact({ }: Props) {
   const item_list = [
   {
     key: '',
     label: 'Цена',
     children: [
       {
-        label: <PriceComponent items={items} />
+        label: <PriceComponent />
       }
     ]
   },
@@ -73,7 +73,7 @@ export default function SliderReact({ items }: Props) {
           // className={"sub-menu-custom"}
           style={{ maxHeight: 440 }}
         />
-          <PriceComponent items={items} />
+          <PriceComponent  />
       </Menu>
     </Sider>
   )

@@ -8,18 +8,9 @@ import styles from './price.module.css'
 import classNames from 'classnames'
 
 export interface Props {
-  items: Item[]
 }
 
-export default function PriceComponent({ items }: Props) {
-  // const alex = items.reduce((accumulator, item) => {
-  //   return item.price < accumulator ? item.price : accumulator
-  // }, 10000)
-  //
-  // const daun = items.reduce((accumulator, item) => {
-  //   return item.price > accumulator ? item.price : accumulator
-  // }, 0)
-
+export default function PriceComponent({ }: Props) {
   const [ leftInputValue, setLeftInputValue ] = React.useState<string>("")
   const [ rightInputValue, setRightInputValue ] = React.useState<string>("")
 
@@ -41,28 +32,30 @@ export default function PriceComponent({ items }: Props) {
     setRightInputValue("")
   }, [ setRightInputValue ])
 
-  const handleClickPushPriceParam = React.useCallback(() => {
+  const handleClickPushPriceParam = () => (
     Router.push({
       pathname: `/`,
-      query: { price: `${leftInputValue}-${rightInputValue}` }
-    })
-  }, [])
+      query: { price: `${leftInputValue}-${rightInputValue}`},
+    }
+    ,undefined, {shallow: true})
+  )
 
   const setValue = React.useMemo(() => {
     return rightInputValue && leftInputValue
   }, [ rightInputValue, leftInputValue ])
+
 
   return (
     <div>
       <div style={{ display: 'flex'}}>
         <div>
           <label className={styles.inputLabel}>от</label>
-          <input value={leftInputValue} placeholder={`${123}`} onChange={handleChangeLeftInput} className={styles.priceInput} />
+          <input value={leftInputValue} placeholder={``} onChange={handleChangeLeftInput} className={styles.priceInput} />
           {!!leftInputValue && <div onClick={handleClickClearLeftInput} className={styles.close} />}
         </div>
         <div>
           <label className={styles.inputLabel}>до</label>
-          <input value={rightInputValue} placeholder={`${2123}`} onChange={handleChangeRightInput} className={styles.priceInput} />
+          <input value={rightInputValue} placeholder={``} onChange={handleChangeRightInput} className={styles.priceInput} />
           {!!rightInputValue && <div onClick={handleClickClearRightInput} className={styles.close} />}
         </div>
       </div>

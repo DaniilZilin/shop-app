@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Item } from '../../../../app/types'
+import {Item, Types} from '../../../../app/types'
 
 
 const ITEM_LIST: Item[] = [
@@ -17,6 +17,13 @@ const ITEM_LIST: Item[] = [
         'благодаря чему для установки задействуется всего 2 отсека расширения. Для подключения к материнской плате используется ' +
         'интерфейс PCI-E 3.0. Для внешних мониторов на корпусе также предусмотрено несколько видов видеоразъемов.',
       slug: 'videokarta',
+      characteristics: [
+        {
+          country: 'Russian Federation',
+          grant: '12',
+          type: Types.VideoCard,
+        }
+      ],
       photos: [
         {
           id: 1,
@@ -101,29 +108,39 @@ const ITEM_LIST: Item[] = [
 ]
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Item[]>) {
+  let currentObject = ITEM_LIST
   const queryParams = req.query
-  const priceParam = queryParams.price
-  // if (priceParam && priceParam.includes('-')) {
-  //   const alex = priceParam.indexOf('-')
-  //   const min = Number(priceParam.slice(0, alex))
-  //   const max = Number(priceParam.slice(alex+1,))
-  //   const dolboeb = ITEM_LIST.filter(item => item.price > min && item.price < max)
-  //   res.status(200).json(dolboeb)
-  // }
-  if (queryParams.sort) {
-    if (queryParams.sort === 'name') {
-      const daun = [...ITEM_LIST].sort((a,b) => (
-        a.name > b.name ? 1 : -1
-      ))
-      res.status(200).json(daun)
-    } else if (queryParams.sort === '-name') {
-      const alex = [...ITEM_LIST].sort((a,b) => (
-        a.name > b.name ? -1 : 1
-      ))
-      res.status(200).json(alex)
+
+  if (queryParams) {
+    if (queryParams.price && queryParams.price.includes('-')) {
+      const indexOfDash = queryParams.price.indexOf('-')
+      const leftValue = Number(queryParams.price.slice(0, indexOfDash))
+      const rightValue = Number(queryParams.price.slice(indexOfDash + 1,))
+      currentObject = [...currentObject].filter(item => item.price > leftValue && item.price < rightValue)
+      console.log(currentObject)
     }
-  }
-  else {
+
+    if (queryParams.sort) {
+      if (queryParams.sort === 'name') {
+        currentObject.sort((a, b) => (
+          a.name > b.name ? 1 : -1
+        ))
+      } else if (queryParams.sort === '-name') {
+        currentObject.sort((a, b) => (
+          a.name > b.name ? -1 : 1
+        ))
+      } else if (queryParams.sort === 'price') {
+        currentObject.sort((a, b) => (
+          a.price > b.price ? -1 : 1
+        ))
+      } else if (queryParams.sort === '-price') {
+        currentObject.sort((a, b) => (
+          a.price > b.price ? 1 : -1
+        ))
+      }
+    }
+    res.status(200).json(currentObject)
+  } else {
     res.status(200).json(ITEM_LIST)
   }
 }

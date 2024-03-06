@@ -10,10 +10,9 @@ import { Item } from '../types'
 
 export interface Props {
   children: React.ReactNode
-  items: Item[]
 }
 
-export default function MainLayout({ children, items }: Props) {
+export default function MainLayout({ children }: Props) {
   const [ shouldDisplayMiniCart, setShouldDisplayMiniCart ] = React.useState(false)
 
   const showMiniCartTemporarily = React.useCallback(() => {
@@ -25,7 +24,7 @@ export default function MainLayout({ children, items }: Props) {
     <Layout>
       <HeaderReact setShouldDisplayMiniCart={setShouldDisplayMiniCart} shouldDisplayMiniCart={shouldDisplayMiniCart} />
       <Layout>
-        <SliderReact items={items}/>
+        <SliderReact />
         <MiniCartContext.Provider value={showMiniCartTemporarily}>
           <ContentReact children={children} />
         </MiniCartContext.Provider>
