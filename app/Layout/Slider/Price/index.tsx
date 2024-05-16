@@ -37,7 +37,7 @@ export default function PriceComponent({ }: Props) {
       pathname: `/`,
       query: { price: `${leftInputValue}-${rightInputValue}`},
     }
-    ,undefined, {shallow: true})
+    ,undefined, { shallow: true })
   )
 
   const setValue = React.useMemo(() => {

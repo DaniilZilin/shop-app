@@ -110,14 +110,14 @@ const ITEM_LIST: Item[] = [
 export default function handler(req: NextApiRequest, res: NextApiResponse<Item[]>) {
   let currentObject = ITEM_LIST
   const queryParams = req.query
+  console.log(queryParams)
 
   if (queryParams) {
-    if (queryParams.price && queryParams.price.includes('-')) {
-      const indexOfDash = queryParams.price.indexOf('-')
-      const leftValue = Number(queryParams.price.slice(0, indexOfDash))
-      const rightValue = Number(queryParams.price.slice(indexOfDash + 1,))
-      currentObject = [...currentObject].filter(item => item.price > leftValue && item.price < rightValue)
-      console.log(currentObject)
+    if (queryParams.price) {
+      console.log(queryParams)
+      const [ start, end ] = (queryParams.price as string).split('-')
+      // @ts-ignore
+      currentObject = [...currentObject].filter(item => item.price > start && item.price < end)
     }
 
     if (queryParams.sort) {
