@@ -20,7 +20,7 @@ export default function MiniCartItem({ item }: Props) {
 
   return (
     <div className={styles.root}>
-      <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="50" height="50"
+      <Image className={styles.itemPhoto} src={`/img/items_images/${item.photos[0].photo}`} width="50" height="50"
              alt=""/>
       <div className={styles.fullNameBlock}>
         <div className={styles.cartItemAmount}>x{item.quantity}</div>

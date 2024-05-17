@@ -32,20 +32,20 @@ export default function ItemList() {
   // })
 
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
-
   const searchParams = useSearchParams()
 
   const queryString = React.useMemo(() => {
-    const price = searchParams.get('price')
-    const sort = searchParams.get('sort')
+    const sort_1 = searchParams.get('sort')
+    const price_1 = searchParams.get('price')
 
-    return ''
+    const sort: string = sort_1 !== null ? sort_1 : '';
+    const price: string = price_1 !== null ? price_1 : '';
+    const [ start, end ] = price.split('-')
+
+    return { sort: sort, priceFrom: start, priceTo: end }
   }, [ searchParams ])
 
-  const price = searchParams.get('price')
-  const sort = searchParams.get('sort')
-
-  const { data } = useGetItemsQuery({'price': '2'})
+  const { data } = useGetItemsQuery(queryString)
 
   if (!data) {
     return <div>Loading...</div>

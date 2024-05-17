@@ -1,5 +1,5 @@
-import type {NextApiRequest, NextApiResponse} from 'next'
-import { Item, ItemType, Types } from '../../../../app/types'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { Item, Types } from '../../../../app/types'
 
 const ITEM_LIST: Item[] = [
     {
@@ -11,7 +11,6 @@ const ITEM_LIST: Item[] = [
           type: Types.VideoCard,
         }
       ],
-      type: ItemType.VideoCard,
       name: 'Видеокарта Palit GeForce GTX 1660 SUPER GamingPro [NE6166S018J9-1160A-1]',
       specs: 'AM4, 2 x 3 ГГц, L2 - 1 МБ, 2хDDR4-2400 МГц, AMD Radeon R5, TDP 35 Вт',
       description: 'Видеокарта Palit GeForce GTX 1660 SUPER Gaming Pro [NE6166S018J9-1160A-1] представляет собой производительное решение в ' +
@@ -57,7 +56,6 @@ const ITEM_LIST: Item[] = [
       name: 'Процессор AMD A6-9500E OEM',
       characteristics: [
         {
-          type: ItemType.VideoCard,
           year_of_release: 2019,
           grant: '12'
         }

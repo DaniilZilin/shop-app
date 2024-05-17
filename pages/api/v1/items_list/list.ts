@@ -64,6 +64,13 @@ const ITEM_LIST: Item[] = [
         'Модель с тепловыделением не более 65 Вт не нуждается в сложной и мощной системе охлаждения. Производительности этого устройства достаточно ' +
         'для эффективной работы с любым офисным софтом или запуска не самых ресурсоемких приложений и игр.',
       slug: 'prozessor',
+      characteristics: [
+        {
+          country: 'Russian Federation',
+          grant: '12',
+          type: Types.VideoCard,
+        }
+      ],
       photos: [
         {
           id: 3,
@@ -93,6 +100,13 @@ const ITEM_LIST: Item[] = [
         '1.8-метрового кабеля в тканевой оплетке с USB-коннектором на конце. За счет подставки для рук кистям' +
         ' и предплечьям будет удобно даже при продолжительном игровом сете.',
       slug: 'klaviatura',
+      characteristics: [
+        {
+          country: 'Russian Federation',
+          grant: '12',
+          type: Types.VideoCard,
+        }
+      ],
       photos: [
         {
           id: 5,
@@ -113,14 +127,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Item[]
   console.log(queryParams)
 
   if (queryParams) {
-    if (queryParams.price) {
+    if (!!queryParams.price) {
       console.log(queryParams)
       const [ start, end ] = (queryParams.price as string).split('-')
       // @ts-ignore
       currentObject = [...currentObject].filter(item => item.price > start && item.price < end)
     }
 
-    if (queryParams.sort) {
+    if (!!queryParams.sort) {
       if (queryParams.sort === 'name') {
         currentObject.sort((a, b) => (
           a.name > b.name ? 1 : -1

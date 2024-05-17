@@ -32,8 +32,8 @@ export default function ProductItem({ good }: Props) {
             <div>{ruble.format(good.price)}</div>
             <div></div>
             <div>
-            {good.characteristics.map((item) => (
-              <div>
+            {good.characteristics.map((item, index) => (
+              <div key={index}>
                 <div>{item.type}</div>
                 <div>{item.country}</div>
                 <div>{item.grant}</div>

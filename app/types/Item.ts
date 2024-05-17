@@ -5,7 +5,6 @@ export interface Item {
   name: string,
   specs: string,
   description: string,
-  type: ItemType,
   photos: PhotoType[],
   slug: string,
   price: number,

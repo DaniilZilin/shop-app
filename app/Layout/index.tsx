@@ -6,8 +6,6 @@ import ContentReact from './Content'
 import SliderReact from './Slider'
 import MiniCartContext from '../contexts/MiniCartContext'
 
-import { Item } from '../types'
-
 export interface Props {
   children: React.ReactNode
 }

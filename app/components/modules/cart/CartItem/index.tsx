@@ -74,7 +74,7 @@ export default function CartItem({ item, selectedItems, setSelectedItems, isOnly
         />
       )}
       <div className={styles.cartImage}>
-        <Image className={styles.itemPhoto} src={`/img/items_images/${item.photo}`} width="150" height="150" alt=""/>
+        <Image className={styles.itemPhoto} src={`/img/items_images/${item.photos[0].photo}`} width="150" height="150" alt=""/>
       </div>
       <div className={styles.cartItemBlock}>
         <div className={styles.itemName}>{item.name}</div>

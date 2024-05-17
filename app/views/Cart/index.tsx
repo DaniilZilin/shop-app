@@ -1,10 +1,6 @@
 import React from 'react'
 
-import Cart from "../../components/modules/cart";
-
-export interface Props {
-
-}
+import Cart from "../../components/modules/cart"
 
 export default function CartView() {
   return (
