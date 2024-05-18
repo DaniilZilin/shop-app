@@ -1,25 +1,25 @@
-import { Sorting } from '../../../types'
+import { Sorting } from '../../../../types'
 
 const SORTING_LIST: Sorting[] = [
   {
     value: 1,
     label: 'По названию (возрастание)',
-    route: 'name',
+    slug: 'name',
   },
   {
     value: 2,
     label: 'По названию (убывание)',
-    route: '-name',
+    slug: '-name',
   },
   {
     value: 3,
     label: 'Недорогие',
-    route: '-price'
+    slug: '-price'
   },
   {
     value: 4,
     label: 'Дорогие',
-    route: 'price',
+    slug: 'price',
   }
 ]
 

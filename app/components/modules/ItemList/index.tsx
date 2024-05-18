@@ -7,30 +7,11 @@ import Router from 'next/router'
 
 import styles from './ItemsList.module.css'
 import AddToCartButton from './AddToCartButton'
-import SortingDropdown from '../../../Layout/Content/SortingDropdown'
 import { useGetItemsQuery } from '../../../store/reducers/itemsApi'
 import { useSearchParams } from "next/navigation";
+import SortingDropdown from './SortingDropdown'
 
 export default function ItemList() {
-  const [ isVisible, setIsVisible ] = React.useState<boolean>(false)
-  const [ currentSortingParam, setCurrentSortingParam ] = React.useState("По названию (возрастание)")
-  const dropdownMenuRef = React.useRef(null)
-
-  // const handleClickDisplayDiv = React.useCallback(() => {
-  //   setIsVisible(!isVisible)
-  // }, [ setIsVisible, isVisible ])
-  //
-  // React.useEffect(() => {
-  //   const handler = (e: MouseEvent) => {
-  //     // @ts-ignore
-  //     if (!dropdownMenuRef.current.contains(e.target)) {
-  //       setIsVisible(false)
-  //     }
-  //   }
-  //   document.addEventListener("mousedown", handler)
-  //   return () => document.removeEventListener("mousedown", handler);
-  // })
-
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
   const searchParams = useSearchParams()
 
@@ -54,10 +35,7 @@ export default function ItemList() {
   return (
     <>
       <div>
-        <div ref={dropdownMenuRef}>
-          <div>Сортировать: {currentSortingParam}</div>
-          {isVisible && <SortingDropdown currentSortingParam={currentSortingParam} setCurrentSortingParam={setCurrentSortingParam} setIsVisible={setIsVisible} />}
-        </div>
+        <SortingDropdown />
         <div>
           {data.length >= 1 ?
             (data.map((item: Item) => (
