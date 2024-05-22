@@ -1,8 +1,11 @@
-import { PhotoType, Characteristics, ItemType } from './index'
+import { PhotoType, Characteristics } from './index'
+import { CHARACTERISTICS, DEVICE_TYPES } from "../constants"
 
 export interface Item {
   id: number,
   name: string,
+  device_type: DEVICE_TYPES,
+  characteristics: CHARACTERISTICS[]
   specs: string,
   description: string,
   photos: PhotoType[],
@@ -12,5 +15,4 @@ export interface Item {
   brand: string
   order_available: number,
   quantity: number,
-  characteristics: Characteristics[]
 }

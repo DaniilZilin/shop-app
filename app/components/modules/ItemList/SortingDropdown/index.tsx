@@ -1,6 +1,5 @@
 import React from 'react'
-import Router from 'next/router'
-import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 import SORTING_LIST from './sorting_params'
 import styles from './dropdown.module.css'
@@ -9,9 +8,8 @@ import { Sorting } from '../../../../types'
 export default function SortingDropdown() {
   const [ isVisible, setIsVisible ] = React.useState<boolean>(false)
 
-  const searchParams = useSearchParams()
-  const sort_1 = searchParams.get('sort')
-  const sort: string = sort_1 !== null ? sort_1 : '';
+  const router = useRouter()
+  const sort = !!router.query.sort ? router.query.sort : undefined;
 
   const [ currentParam, setCurrentParam ] = React.useState<any>(sort ? SORTING_LIST.find((item) => item.slug === sort)?.label : SORTING_LIST.find((item) => item.value === 1)?.label )
   const dropdownRef = React.useRef(null)
@@ -22,12 +20,12 @@ export default function SortingDropdown() {
 
   const setSortParam = React.useCallback((item: Sorting) => {
     setCurrentParam(item.label)
-     Router.push({
+     router.push({
       pathname: '/',
-      query: { sort: item.slug },
+      query: { ...router.query, sort: item.slug },
     }
     ,undefined, { shallow: true })
-  }, [ setCurrentParam ])
+  }, [ setCurrentParam, router ])
 
   React.useEffect(() => {
     const handler = (e: MouseEvent) => {

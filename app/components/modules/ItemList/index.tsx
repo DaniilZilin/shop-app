@@ -1,32 +1,31 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import { Item } from '../../../types'
 import Image from 'next/image'
 import { Rate } from 'antd'
 
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 import styles from './ItemsList.module.css'
 import AddToCartButton from './AddToCartButton'
 import { useGetItemsQuery } from '../../../store/reducers/itemsApi'
-import { useSearchParams } from "next/navigation";
 import SortingDropdown from './SortingDropdown'
 
 export default function ItemList() {
   let ruble = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
-  const searchParams = useSearchParams()
+  const router = useRouter()
 
-  const queryString = React.useMemo(() => {
-    const sort_1 = searchParams.get('sort')
-    const price_1 = searchParams.get('price')
+  const queryParams = React.useMemo(() => {
+    const sort = router.query.sort ? router.query.sort : undefined
+    const price = router.query.price ? router.query.price : undefined
+    if (price !== undefined) {
+      const [start, end] = (price as string).split('-')
+      return { sort: sort, priceFrom: start, priceTo: end }
+    } else {
+      return { sort: sort, priceFrom: undefined, priceTo: undefined }
+    }
+  }, [ router ])
 
-    const sort: string = sort_1 !== null ? sort_1 : '';
-    const price: string = price_1 !== null ? price_1 : '';
-    const [ start, end ] = price.split('-')
-
-    return { sort: sort, priceFrom: start, priceTo: end }
-  }, [ searchParams ])
-
-  const { data } = useGetItemsQuery(queryString)
+  const { data } = useGetItemsQuery(queryParams)
 
   if (!data) {
     return <div>Loading...</div>

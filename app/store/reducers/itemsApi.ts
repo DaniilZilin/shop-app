@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 const API_URL = 'http://localhost:3000/api/v1/items_list/list'
 
 interface Item_1 {
-  priceFrom?: string,
-  priceTo?: string,
-  sort?: string,
+  priceFrom?: string | undefined,
+  priceTo?: string | undefined,
+  sort?: string | undefined,
 }
 
 export const itemsApi = createApi({
@@ -16,8 +16,8 @@ export const itemsApi = createApi({
       query: ({ sort, priceFrom, priceTo }) => ({
         url: '/',
         params: {
-          sort,
-          price: priceFrom && priceTo ? `${priceFrom}-${priceTo}` : ''
+          sort: sort || undefined,
+          price: priceFrom && priceTo ? `${priceFrom}-${priceTo}` : undefined
         }
       })
     })

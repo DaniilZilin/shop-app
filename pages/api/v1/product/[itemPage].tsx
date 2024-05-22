@@ -1,18 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Item, Types } from '../../../../app/types'
+import { CHARACTERISTICS } from '../../../../app/constants'
 
 const ITEM_LIST: Item[] = [
     {
       id: 1,
-      characteristics: [
-        {
-          country: 'Russian Federation',
-          grant: '12',
-          type: Types.VideoCard,
-        }
-      ],
       name: 'Видеокарта Palit GeForce GTX 1660 SUPER GamingPro [NE6166S018J9-1160A-1]',
       specs: 'AM4, 2 x 3 ГГц, L2 - 1 МБ, 2хDDR4-2400 МГц, AMD Radeon R5, TDP 35 Вт',
+      device_type: 'videocard',
+      characteristics: [
+        { slug: "main_characteristics", graphic_processor: "GeForce GTX 1660 SUPER", architecture: " NVIDIA Turing", technical_process: "12nm" },
+        { slug: "videomemory", amount_of_videomemory: "6 GB", type_of_memory: "GDDR6", shina_of_memory: "192 bit" }
+      ],
       description: 'Видеокарта Palit GeForce GTX 1660 SUPER Gaming Pro [NE6166S018J9-1160A-1] представляет собой производительное решение в ' +
         'компактном корпусе, которое станет отличным выбором для компьютерных систем в миниатюрном корпусе. В основе графического ускорителя ' +
         'используется многоядерный процессор, работающий в широком частотном диапазоне, что вкупе с большим объемом встроенной памяти может ' +
