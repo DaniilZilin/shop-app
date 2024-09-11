@@ -1,0 +1,53 @@
+.priceInput {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  min-width: 15px;
+  max-width: 80px;
+  padding: 0 5px;
+  text-indent: 2px;
+  width: 60px;
+  margin: 0 20px 0 20px;
+}
+
+.inputLabel {
+  position: relative;
+  top: 6px;
+  left: 6px;
+}
+
+.close {
+  position: relative;
+  top: -15px;
+  left: 75px;
+  cursor: pointer;
+}
+
+.submitPriceButton {
+  margin-left: 40px;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: #8c8c8c;
+}
+
+/*input[type="tel"]::placeholder {*/
+/*  text-align: left;*/
+/*}*/
+
+.submitPriceButton.active {
+  background-color: blue;
+}
+
+.priceLeftInput {
+  width: 95px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.priceRightInput {
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
